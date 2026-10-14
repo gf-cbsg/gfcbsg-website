@@ -121,25 +121,15 @@ Upload the photo **before** saving the post that uses it. If the post comes firs
 The meeting time and place are kept in one file, `src/config/site.ts`. Everything that shows them reads from there: the Home page, the Contact page, the footer, the map, and the information search engines see.
 
 1. Open https://github.com/gf-cbsg/gfcbsg-website/blob/main/src/config/site.ts and click the pencil icon (**Edit this file**).
-2. Find these lines:
-
-   ```ts
-   export const meeting: Meeting = {
-     day: null,
-     time: null,
-     venue: null,
-   };
-   ```
-
-3. Replace them with the real details. For example:
+2. Find the `meeting` block. It currently looks like this:
 
    ```ts
    export const meeting: Meeting = {
      day: { zh: '周五', en: 'Friday' },
      time: { zh: '晚上 7:30', en: '7:30 pm' },
      venue: {
-       name: 'Faith Evangelical Free Church',
-       street: '1400 24th Ave S',
+       name: 'Valley Christian Church',
+       street: '3920 Cherry St',
        city: 'Grand Forks',
        region: 'ND',
        postalCode: '58201',
@@ -147,11 +137,11 @@ The meeting time and place are kept in one file, `src/config/site.ts`. Everythin
    };
    ```
 
-   Keep the quotes, commas and curly brackets exactly as in the example. `null` means "not confirmed": the site then shows a yellow "TODO: confirm" marker instead.
+3. Change only the text inside the quotes. `zh` is the Chinese wording and `en` the English. Keep the quotes, commas and curly brackets exactly as they are. To hide a detail that isn't confirmed, replace its whole value with `null` (for example `venue: null,`); the site then shows a yellow "TODO: confirm" marker instead.
 
 4. Click **Commit changes…** and commit directly to the `main` branch.
 
-After the update, the Home page card reads "欢迎周五晚上 7:30 来参加 · Join us this Friday, 7:30 pm", and the Contact page shows the address and a map. To stop showing a detail, set it back to `null`. Then delete items 1 and 2 from `MIGRATION_TODO.md`.
+The Home page card's heading is built from these values ("欢迎周五晚上 7:30 来参加 · Join us this Friday, 7:30 pm"). The Apple Maps and Google Maps buttons, the map on the Contact page, and the footer all update automatically.
 
 ## Change other text
 
@@ -173,15 +163,28 @@ These files mix text with code. Change only the words, and keep the `lang="zh-Ha
 
 For people who want to work on the code. You need [Node.js](https://nodejs.org) 22.22.0 (the version in `.nvmrc`) and git.
 
+First time:
+
 ```bash
 git clone git@github.com:gf-cbsg/gfcbsg-website.git
 cd gfcbsg-website
-nvm use          # switch to the Node version in .nvmrc (or install Node 22.22.0 another way)
-npm ci           # install the exact dependency versions from package-lock.json
-npm run dev      # local site at http://localhost:4321, updates as you edit
-npm run build    # build the production site into dist/
-npm run preview  # serve dist/ locally to check the build
+nvm use
+npm ci
+npm run dev
 ```
+
+Then open http://localhost:4321. The page reloads when you save a file. Press `Ctrl+C` to stop.
+
+| Command | What it does |
+|---|---|
+| `nvm use` | Switches to the Node version in `.nvmrc`. Without nvm, install Node 22.22.0 another way (for example `brew install node@22` on a Mac). |
+| `npm ci` | Installs the exact dependency versions from `package-lock.json`. Run it again after pulling changes. |
+| `npm run dev` | Runs the site locally at http://localhost:4321 and updates it as you edit. |
+| `npm run build` | Builds the production site into `dist/`. Run this before pushing to `main`. |
+| `npm run preview` | Serves the built `dist/` folder locally, to check exactly what will be published. |
+| `npx wrangler pages dev dist` | Serves `dist/` the way Cloudflare does, including the redirects in `public/_redirects` (after `npm run build`). |
+
+Two things behave differently locally: an address without its final slash (`/about` instead of `/about/`) shows "page not found", and old Google Sites addresses aren't redirected. Both work on Cloudflare.
 
 How the project is laid out:
 
@@ -242,7 +245,7 @@ This points the address www.gfcbsg.com at the new site instead of the old Google
 
 **Before you start**
 
-- The new site works at its `.pages.dev` address. Either the meeting details are filled in (`MIGRATION_TODO.md` items 1–2), or you're happy to launch with the TODO markers showing.
+- The new site works at its `.pages.dev` address, and you've checked the remaining yellow "TODO: confirm" markers (`MIGRATION_TODO.md`): either resolved, or fine to launch with.
 - Find out where the domain's settings (DNS) are managed. Look up `gfcbsg.com` at https://lookup.icann.org: "Registrar" is the company the domain is registered with, and "Name servers" shows who hosts its DNS. Domains bought through Google Domains were moved to Squarespace Domains in 2023. Sign in to that account.
 
 **Steps**

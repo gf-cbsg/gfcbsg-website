@@ -496,6 +496,15 @@ mark.todo {
   overflow-wrap: anywhere;
 }
 
+.map-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .meeting-contact {
   margin: 1.25rem 0 0;
   padding-top: 1rem;

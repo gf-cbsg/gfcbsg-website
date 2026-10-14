@@ -43,25 +43,18 @@ interface Meeting {
   venue: Venue | null;
 }
 
-// The old website (last updated 2018) said: Fridays at 7:30 pm, at
-// Faith Evangelical Free Church, 1400 24th Ave S, Grand Forks, ND 58201.
-// That is not confirmed as current, so every field is null for now.
-//
-// When confirmed, fill the fields in like this:
-//
-//   day: { zh: '周五', en: 'Friday' },
-//   time: { zh: '晚上 7:30', en: '7:30 pm' },
-//   venue: {
-//     name: 'Faith Evangelical Free Church',
-//     street: '1400 24th Ave S',
-//     city: 'Grand Forks',
-//     region: 'ND',
-//     postalCode: '58201',
-//   },
+// Weekly meeting. Set a field to null if it is not confirmed; the site then
+// shows a "TODO: confirm" marker instead of that detail.
 export const meeting: Meeting = {
-  day: null,
-  time: null,
-  venue: null,
+  day: { zh: '周五', en: 'Friday' },
+  time: { zh: '晚上 7:30', en: '7:30 pm' },
+  venue: {
+    name: 'Valley Christian Church',
+    street: '3920 Cherry St',
+    city: 'Grand Forks',
+    region: 'ND',
+    postalCode: '58201',
+  },
 };
 
 export function venueAddress(venue: Venue): string {
@@ -106,7 +99,16 @@ export function organizationJsonLd(): Record<string, unknown> {
   };
 }
 
-export function mapUrl(venue: Venue): string {
-  const query = `${venue.name}, ${venueAddress(venue)}`;
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+function venueQuery(venue: Venue): string {
+  return encodeURIComponent(`${venue.name}, ${venueAddress(venue)}`);
+}
+
+/** Directions to the venue in Google Maps (opens the app on phones). */
+export function googleMapsUrl(venue: Venue): string {
+  return `https://www.google.com/maps/dir/?api=1&destination=${venueQuery(venue)}`;
+}
+
+/** Directions to the venue in Apple Maps (opens the app on iPhone and Mac). */
+export function appleMapsUrl(venue: Venue): string {
+  return `https://maps.apple.com/?daddr=${venueQuery(venue)}`;
 }

@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import MeetingCard from '../components/MeetingCard.astro';
 import PostList from '../components/PostList.astro';
-import Todo from '../components/Todo.astro';
 import { organizationJsonLd, site } from '../config/site';
 import { getPosts } from '../lib/posts';
 
@@ -80,15 +79,18 @@ const latest = (await getPosts()).slice(0, 3);
         </li>
         <li class="card">
           <h3><span lang="zh-Hans">语言</span>{' '}<span lang="en">Language</span></h3>
-          <p><Todo /></p>
+          <p lang="zh-Hans">中文和英文。</p>
+          <p lang="en">Chinese and English.</p>
         </li>
         <li class="card">
           <h3><span lang="zh-Hans">形式与时长</span>{' '}<span lang="en">Format and length</span></h3>
-          <p><Todo /></p>
+          <p lang="zh-Hans">团契与圣经学习，1.5 小时。</p>
+          <p lang="en">Fellowship and Bible study, 1.5 hours.</p>
         </li>
         <li class="card">
           <h3><span lang="zh-Hans">带孩子来</span>{' '}<span lang="en">Bringing children</span></h3>
-          <p><Todo /></p>
+          <p lang="zh-Hans">我们有青少年班和幼儿班。</p>
+          <p lang="en">We have a youth class and a class for young children.</p>
         </li>
         <li class="card">
           <h3><span lang="zh-Hans">聚餐与节庆</span>{' '}<span lang="en">Potlucks and celebrations</span></h3>

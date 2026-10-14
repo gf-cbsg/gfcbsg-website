@@ -8,14 +8,10 @@ When an item is resolved, make the change described and delete the item from thi
 
 Items marked **on site** show a yellow `TODO: confirm` marker on the live pages until they are fixed. The others are only listed here.
 
+Items 1–6 (meeting day and time, venue, Home page wording, language, format and length, and children) were resolved on 2026-10-14: Fridays at 7:30 pm at Valley Christian Church, in Chinese and English, with fellowship and Bible study for 1.5 hours, plus a youth class and a class for young children. The numbers of the remaining items are unchanged.
+
 | # | What | Where | How to fix |
 |---|---|---|---|
-| 1 | **Meeting day and time.** The old site said Fridays, 7:30 pm. The group says there are no meetings at present. | **On site:** Home (meeting card), Contact, footer on every page | Fill in `day` and `time` in `src/config/site.ts` (see the README). |
-| 2 | **Meeting venue and address.** The old site said Faith Evangelical Free Church, 1400 24th Ave S, Grand Forks, ND 58201. | **On site:** Home, Contact (address and map) | Fill in `venue` in `src/config/site.ts`. The map, the map link and the search-engine data (JSON-LD `location`) then appear automatically. |
-| 3 | **What the Home page should lead with** while there are no regular meetings. Today the meeting card shows TODO markers. Once items 1 and 2 are filled in, its heading becomes "Join us this Friday, 7:30 pm". | Home | Fill in items 1–2, or ask for different hero wording. |
-| 4 | **Language(s) used at meetings** (Mandarin? Cantonese? English?) | **On site:** Home, "What to expect" | Edit the "Language" card in `src/pages/index.astro`. |
-| 5 | **Meeting format and length** | **On site:** Home, "What to expect" | Edit the "Format and length" card in `src/pages/index.astro`. |
-| 6 | **Bringing children:** are children welcome, and is anything provided for them? | **On site:** Home, "What to expect" | Edit the "Bringing children" card in `src/pages/index.astro`. |
 | 7 | **How visitors can get updates by email** | **On site:** Events | Edit the "Getting updates by email" section in `src/pages/events.astro`. |
 | 8 | **Is the group's Google Calendar public?** If not, the calendar on the Events page shows nothing to visitors. | Events | In Google Calendar (signed in as `chinese.biblestudy.group@gmail.com`): Settings → the calendar → Access permissions → tick "Make available to public". |
 | 9 | **Is the sermons link still valid?** `http://cn.rrvccc.org/p/blog-page_77.html` was last captured by the Internet Archive in 2019. The church's main site is `https://www.rrvccc.org/`. | Sermons; post of 2017-10-30 | If the link is dead, replace `rrvcccUrl` in `src/pages/sermons.astro` (and the link in `src/content/posts/2017-10-30-rrvccc-sermons.md`). |

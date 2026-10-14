@@ -1,7 +1,7 @@
 ---
 // The "Join us" card on the Home page. Its contents come from
 // src/config/site.ts; unconfirmed fields show a TODO marker.
-import { meeting, mapUrl, site, venueAddress } from '../config/site';
+import { appleMapsUrl, googleMapsUrl, meeting, site, venueAddress } from '../config/site';
 import Todo from './Todo.astro';
 
 const { day, time, venue } = meeting;
@@ -59,10 +59,20 @@ const when =
 
   {
     venue && (
-      <a class="button button-quiet" href={mapUrl(venue)}>
-        <span lang="zh-Hans">在地图上查看</span>{' '}
-        <span lang="en">View map</span>
-      </a>
+      <ul class="map-links" aria-label="导航 Directions">
+        <li>
+          <a class="button button-quiet" href={appleMapsUrl(venue)}>
+            <span lang="zh-Hans">Apple 地图导航</span>{' '}
+            <span lang="en">Apple Maps</span>
+          </a>
+        </li>
+        <li>
+          <a class="button button-quiet" href={googleMapsUrl(venue)}>
+            <span lang="zh-Hans">Google 地图导航</span>{' '}
+            <span lang="en">Google Maps</span>
+          </a>
+        </li>
+      </ul>
     )
   }
 
