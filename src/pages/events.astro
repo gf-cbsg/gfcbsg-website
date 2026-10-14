@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import Todo from '../components/Todo.astro';
 import { site } from '../config/site';
 
 const calendar = encodeURIComponent(site.calendarId);
@@ -10,6 +9,8 @@ const embedUrl =
 const openUrl = `https://calendar.google.com/calendar/embed?src=${calendar}&ctz=America%2FChicago`;
 // Google's "add this calendar" link takes the calendar ID in base64.
 const addUrl = `https://calendar.google.com/calendar/u/0?cid=${btoa(site.calendarId).replace(/=+$/, '')}`;
+// Opens a pre-addressed email asking to join the mailing list.
+const subscribeHref = `mailto:${site.email}?subject=${encodeURIComponent('订阅活动通知 Subscribe to event updates')}`;
 const description =
   '大福克斯中文查经班的活动日历。The Grand Forks Chinese Bible Study Group events calendar.';
 ---
@@ -54,13 +55,21 @@ const description =
         <span lang="zh-Hans">通过电子邮件接收活动通知</span>{' '}
         <span lang="en">Getting updates by email</span>
       </h2>
-      <p><Todo /></p>
       <p>
-        <span lang="zh-Hans">有问题？欢迎写信给我们：</span><a href={`mailto:${site.email}`}
-          >{site.email}</a
-        >
+        <span lang="zh-Hans">想收到活动通知？请写信给我们，我们会把您加入通知名单。</span>
         <br />
-        <span lang="en">Questions? Email us at the address above.</span>
+        <span lang="en">Want event updates? Email us and we'll add you to our mailing list.</span>
+      </p>
+      <p>
+        <a class="button" href={subscribeHref}>
+          <span lang="zh-Hans">写信订阅</span>{' '}
+          <span lang="en">Email to subscribe</span>
+        </a>
+      </p>
+      <p>
+        <span lang="zh-Hans">邮箱：</span><a href={`mailto:${site.email}`}>{site.email}</a>
+        <br />
+        <span lang="en">Questions are welcome at the same address.</span>
       </p>
     </div>
   </section>

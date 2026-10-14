@@ -8,11 +8,10 @@ When an item is resolved, make the change described and delete the item from thi
 
 Items marked **on site** show a yellow `TODO: confirm` marker on the live pages until they are fixed. The others are only listed here.
 
-Items 1–6 (meeting day and time, venue, Home page wording, language, format and length, and children) were resolved on 2026-10-14: Fridays at 7:30 pm at Valley Christian Church, in Chinese and English, with fellowship and Bible study for 1.5 hours, plus a youth class and a class for young children. Item 9 (the sermons link) was resolved the same day: it now points to https://cn.rrvccc.org/证道. The numbers of the remaining items are unchanged.
+Items 1–6 (meeting day and time, venue, Home page wording, language, format and length, and children) were resolved on 2026-10-14: Fridays at 7:30 pm at Valley Christian Church, in Chinese and English, with fellowship and Bible study for 1.5 hours, plus a youth class and a class for young children. Item 7 (email updates) was also resolved: visitors email the group to join its mailing list. Item 9 (the sermons link) was resolved the same day: it now points to https://cn.rrvccc.org/证道. The numbers of the remaining items are unchanged.
 
 | # | What | Where | How to fix |
 |---|---|---|---|
-| 7 | **How visitors can get updates by email** | **On site:** Events | Edit the "Getting updates by email" section in `src/pages/events.astro`. |
 | 8 | **Is the group's Google Calendar public?** If not, the calendar on the Events page shows nothing to visitors. | Events | In Google Calendar (signed in as `chinese.biblestudy.group@gmail.com`): Settings → the calendar → Access permissions → tick "Make available to public". |
 | 10 | **Date and occasion of the group photo** | **On site:** About (photo caption) | Edit the caption in `src/pages/about.astro`. |
 | 11 | **Two name spellings in the 2002 minutes:** "Shu-Fen Shih" vs "Shih-Fen Shih", and "Shen Yang" vs "Yang Shen". | About: the minutes section is hidden for now (`showMinutes` in `src/pages/about.astro`), so this marker doesn't show | Correct `src/data/minutes-2002.md` and update or remove the editor's note in `src/pages/about.astro`. |
