@@ -1,0 +1,19 @@
+{
+  "name": "gfcbsg-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website for the Grand Forks Chinese Bible Study Group (大福克斯中文查经班)",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0 <23"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.3.5"
+  }
+}

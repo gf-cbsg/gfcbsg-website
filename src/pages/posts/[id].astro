@@ -1,0 +1,43 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { site } from '../../config/site';
+import { getPosts, isoDate } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const date = isoDate(post.data.date);
+const description =
+  post.data.description ?? `${post.data.title}（${date}）· ${site.name.zh} ${site.name.en}`;
+---
+
+<Base title={post.data.title} description={description} lang={post.data.lang} type="article">
+  <article class="container page-head">
+    <p class="crumb">
+      <a href="/archive/">← <span lang="zh-Hans">历年活动</span> <span lang="en">Archive</span></a>
+    </p>
+    <h1>{post.data.title}</h1>
+    <p class="post-date"><time datetime={date}>{date}</time></p>
+    <div class="prose">
+      <Content />
+    </div>
+    {
+      post.data.missing_attachment && (
+        <aside class="note">
+          <p>
+            <span lang="zh-Hans">原帖附有 Google Drive 文件夹，目前已无法公开访问。</span>{' '}
+            <span lang="en">
+              The original post linked to a Google Drive folder that is no longer publicly
+              available.
+            </span>
+          </p>
+        </aside>
+      )
+    }
+  </article>
+</Base>

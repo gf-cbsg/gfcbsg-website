@@ -1,0 +1,34 @@
+---
+import { site } from '../config/site';
+import MeetingSummary from './MeetingSummary.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="footer-name">
+        <span lang="zh-Hans">{site.name.zh}</span>{' '}
+        <span lang="en">{site.name.en}</span>
+      </p>
+      <p>
+        <span lang="zh-Hans">成立于 {site.foundedYear} 年</span> ·{' '}
+        <span lang="en">Founded {site.foundedYear}</span>
+      </p>
+    </div>
+    <dl class="facts">
+      <div>
+        <dt><span lang="zh-Hans">电子邮件</span> <span lang="en">Email</span></dt>
+        <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+      </div>
+      <div>
+        <dt><span lang="zh-Hans">聚会</span> <span lang="en">Meetings</span></dt>
+        <dd><MeetingSummary /></dd>
+      </div>
+    </dl>
+  </div>
+  <div class="container footer-bottom">
+    <p>© {year} {site.name.zh} · <span lang="en">{site.name.en}</span></p>
+  </div>
+</footer>

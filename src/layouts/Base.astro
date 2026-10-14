@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../config/site';
+
+type Lang = 'zh-Hans' | 'zh-Hant' | 'en';
+
+interface Props {
+  /** Page title without the site name. Leave empty on the Home page. */
+  title?: string;
+  description?: string;
+  /** Main language of the page. Bilingual pages use 'zh-Hans'. */
+  lang?: Lang;
+  type?: 'website' | 'article';
+}
+
+const { title, description = site.description, lang = 'zh-Hans', type = 'website' } = Astro.props;
+
+const fullTitle = title
+  ? `${title} · ${site.name.zh} ${site.shortName}`
+  : `${site.name.zh} · ${site.name.en}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogLocale: Record<Lang, string> = { 'zh-Hans': 'zh_CN', 'zh-Hant': 'zh_TW', en: 'en_US' };
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1715" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={`${site.name.zh} ${site.name.en}`} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={ogLocale[lang]} />
+    {
+      Object.entries(ogLocale)
+        .filter(([key]) => key !== lang && key !== 'zh-Hant')
+        .map(([, locale]) => <meta property="og:locale:alternate" content={locale} />)
+    }
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      <span lang="zh-Hans">跳到主要内容</span>{' '}
+      <span lang="en">Skip to content</span>
+    </a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
