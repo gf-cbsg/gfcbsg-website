@@ -8,6 +8,10 @@ import groupPhoto from '../assets/legacy/gfcbsg-group-photo-living-room.jpg';
 const description =
   '大福克斯中文查经班的简介和历史：2002 年 10 月 20 日在北达科他大学国际中心成立。' +
   'About the Grand Forks Chinese Bible Study Group and its founding on October 20, 2002.';
+
+// The archived 2002 meeting minutes are hidden for now. Change false to true
+// to show them again; the text itself is in src/data/minutes-2002.md.
+const showMinutes = false;
 ---
 
 <Base title="关于我们 About" description={description}>
@@ -113,39 +117,43 @@ const description =
     </div>
   </section>
 
-  <section class="section" aria-labelledby="minutes-title">
-    <div class="container">
-      <div class="section-head">
-        <h2 id="minutes-title" class="bi">
-          <span lang="zh-Hans">2002 年筹备会议记录</span>{' '}
-          <span lang="en">Minutes of the 2002 organizational meeting</span>
-        </h2>
-        <p class="lead">
-          <span lang="zh-Hans">以下是 2002 年 10 月 20 日筹备会议的原始记录（英文），由 Jean Chen 记录。</span>
-          <br />
-          <span lang="en">
-            The original minutes of the organizational meeting on October 20, 2002, recorded by
-            Jean Chen.
-          </span>
-        </p>
-      </div>
-      <article class="archive-doc" lang="en">
-        <Minutes />
-      </article>
-      <aside class="note">
-        <p>
-          <span lang="zh-Hans">
-            编者注：原文两处把“Hsueh”误拼为“Hsush”，已更正。另有姓名在原文中拼写不一致（Shu-Fen
-            Shih / Shih-Fen Shih；Shen Yang / Yang Shen），保留原样。
-          </span>
-          <span lang="en">
-            Editor's note: two misspellings of “Hsueh” as “Hsush” have been corrected. Some other
-            names are spelled inconsistently in the original (Shu-Fen Shih / Shih-Fen Shih; Shen
-            Yang / Yang Shen) and are left as written.
-          </span>
-          <span><Todo /></span>
-        </p>
-      </aside>
-    </div>
-  </section>
+  {
+    showMinutes && (
+      <section class="section" aria-labelledby="minutes-title">
+        <div class="container">
+          <div class="section-head">
+            <h2 id="minutes-title" class="bi">
+              <span lang="zh-Hans">2002 年筹备会议记录</span>{' '}
+              <span lang="en">Minutes of the 2002 organizational meeting</span>
+            </h2>
+            <p class="lead">
+              <span lang="zh-Hans">以下是 2002 年 10 月 20 日筹备会议的原始记录（英文），由 Jean Chen 记录。</span>
+              <br />
+              <span lang="en">
+                The original minutes of the organizational meeting on October 20, 2002, recorded by
+                Jean Chen.
+              </span>
+            </p>
+          </div>
+          <article class="archive-doc" lang="en">
+            <Minutes />
+          </article>
+          <aside class="note">
+            <p>
+              <span lang="zh-Hans">
+                编者注：原文两处把“Hsueh”误拼为“Hsush”，已更正。另有姓名在原文中拼写不一致（Shu-Fen
+                Shih / Shih-Fen Shih；Shen Yang / Yang Shen），保留原样。
+              </span>
+              <span lang="en">
+                Editor's note: two misspellings of “Hsueh” as “Hsush” have been corrected. Some other
+                names are spelled inconsistently in the original (Shu-Fen Shih / Shih-Fen Shih; Shen
+                Yang / Yang Shen) and are left as written.
+              </span>
+              <span><Todo /></span>
+            </p>
+          </aside>
+        </div>
+      </section>
+    )
+  }
 </Base>

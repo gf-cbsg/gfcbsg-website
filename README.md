@@ -148,7 +148,7 @@ The Home page card's heading is built from these values ("欢迎周五晚上 7:3
 | Page | File |
 |---|---|
 | Home | `src/pages/index.astro` |
-| About | `src/pages/about.astro`; the 2002 minutes are in `src/data/minutes-2002.md` |
+| About | `src/pages/about.astro`; the 2002 minutes are in `src/data/minutes-2002.md` and are hidden for now. To show them, change `const showMinutes = false;` to `true` near the top of `about.astro`. |
 | Events | `src/pages/events.astro` |
 | Sermons | `src/pages/sermons.astro` |
 | Contact | `src/pages/contact.astro` |
