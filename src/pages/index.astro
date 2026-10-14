@@ -2,13 +2,22 @@
 import Base from '../layouts/Base.astro';
 import MeetingCard from '../components/MeetingCard.astro';
 import PostList from '../components/PostList.astro';
-import { organizationJsonLd, site } from '../config/site';
+import { meeting, organizationJsonLd, site } from '../config/site';
 import { getPosts } from '../lib/posts';
 
 const latest = (await getPosts()).slice(0, 3);
+
+// The text search engines show under the site's name. It includes the meeting
+// time and place when they are set in src/config/site.ts.
+const { day, time, venue } = meeting;
+const description =
+  day && time && venue
+    ? `${site.name.zh}每${day.zh}${time.zh} 在 ${venue.name} 聚会，欢迎新朋友。` +
+      `${site.name.en} meets ${day.en}s at ${time.en} at ${venue.name}, ${venue.city}, ${venue.region}. Newcomers welcome.`
+    : site.description;
 ---
 
-<Base jsonLd={organizationJsonLd()}>
+<Base description={description} jsonLd={organizationJsonLd()}>
   <section class="hero" aria-labelledby="site-title">
     <div class="container hero-inner">
       <div>
