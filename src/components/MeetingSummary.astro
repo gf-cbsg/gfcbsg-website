@@ -1,0 +1,18 @@
+---
+// One-line meeting summary for the footer.
+import { meeting } from '../config/site';
+import Todo from './Todo.astro';
+
+const { day, time, venue } = meeting;
+---
+
+{
+  day && time ? (
+    <span>
+      <span lang="zh-Hans">{`每${day.zh}${time.zh}`}</span> ·{' '}
+      <span lang="en">{`${day.en}s, ${time.en}${venue ? ` · ${venue.name}` : ''}`}</span>
+    </span>
+  ) : (
+    <Todo />
+  )
+}

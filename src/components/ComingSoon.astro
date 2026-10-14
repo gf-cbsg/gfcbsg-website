@@ -1,0 +1,19 @@
+---
+// Temporary page body for sections built in the next phase.
+interface Props {
+  zh: string;
+  en: string;
+}
+const { zh, en } = Astro.props;
+---
+
+<section class="container page-head">
+  <h1 class="bi">
+    <span lang="zh-Hans">{zh}</span>{' '}
+    <span lang="en">{en}</span>
+  </h1>
+  <p class="note">
+    <span lang="zh-Hans">此页面将在下一阶段完成。</span>{' '}
+    <span lang="en">This page will be built in the next phase.</span>
+  </p>
+</section>

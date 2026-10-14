@@ -1,0 +1,42 @@
+---
+import { nav } from '../config/nav';
+import { site } from '../config/site';
+import BookMark from './BookMark.astro';
+
+const path = Astro.url.pathname;
+
+function current(href: string): 'page' | 'true' | undefined {
+  if (path === href) return 'page';
+  if (href === '/') return undefined;
+  if (path.startsWith(href)) return 'true';
+  // Individual posts belong to the archive section.
+  if (href === '/archive/' && path.startsWith('/posts/')) return 'true';
+  return undefined;
+}
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/">
+      <BookMark class="brand-mark" />
+      <span>
+        <span class="brand-zh" lang="zh-Hans">{site.name.zh}</span>
+        <span class="brand-en" lang="en">{site.name.en}</span>
+      </span>
+    </a>
+    <nav aria-label="Main · 主导航">
+      <ul class="nav-list">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={current(item.href)}>
+                <span lang="zh-Hans">{item.zh}</span>{' '}
+                <span lang="en">{item.en}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
