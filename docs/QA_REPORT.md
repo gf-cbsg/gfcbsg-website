@@ -9,7 +9,7 @@ Checked on 2026-10-14 against `main`. Everything below was run on the built site
 | `npm run build` from a clean `npm ci` | Pass: 33 pages, 0 warnings, 0 errors |
 | `astro check` (TypeScript and templates) | Pass: 0 errors, 0 warnings, 0 hints |
 | Client-side JavaScript | None: 0 `.js` files in `dist/`. The only `<script>` is the JSON-LD data block on Home. |
-| Internal links, images and anchors | Pass: 445 references across 33 pages, 0 broken |
+| Internal links, images and anchors | Pass: 465 references across 33 pages, 0 broken |
 | Legacy URLs → `_redirects` | Pass: all 28 legacy URLs, with and without a trailing slash, return 301 and land on a working page |
 | Layout at 375 px and 1280 px, light and dark | Pass: 32 pages × 4 views = 128 checks, no horizontal scrolling |
 | Headings, alt text, `lang` | Pass: every page has exactly one `h1`, every image has alt text, and every page sets `lang` |
@@ -25,11 +25,11 @@ Checked on 2026-10-14 against `main`. Everything below was run on the built site
 ### Build
 
 - Clean install with `npm ci`, then `npm run build`, run in a fresh checkout. 33 pages: Home, About, Events, Sermons, Contact, Archive plus 3 year pages, 23 posts, and the 404 page.
-- 8 photos are converted to WebP at build time, with width and height set so they don't cause layout shift.
+- 8 photos are converted to WebP at build time, in 640, 960 and 1280 px versions (plus 1920 px for larger originals), so each screen downloads only the size it needs. Width and height are set so they don't cause layout shift.
 
 ### Internal link check
 
-A script parsed every HTML page in `dist/` and resolved every `href`, `src` and `srcset` that points within the site, including `#anchor` targets. Result: 445 references, 0 broken.
+A script parsed every HTML page in `dist/` and resolved every `href`, `src` and `srcset` that points within the site, including `#anchor` targets. Result: 465 references, 0 broken.
 
 ### Legacy URLs
 
@@ -58,7 +58,7 @@ Every page in the sitemap (32; the 404 page isn't listed) was loaded in headless
 | Sermons `/sermons/` | 100 | 100 | 100 | 100 |
 | Archive `/archive/` | 100 | 100 | 100 | 100 |
 | Contact `/contact/` | 100 | 100 | 100 | 100 |
-| A post with 4 photos | 98 | 100 | 100 | 100 |
+| A post with 4 photos | 99 | 100 | 100 | 100 |
 
 The Events score is likely to drop slightly in production, because the Google Calendar embed couldn't load in the test environment (see below).
 
