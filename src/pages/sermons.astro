@@ -3,9 +3,9 @@ import Base from '../layouts/Base.astro';
 import PostList from '../components/PostList.astro';
 import { getSermonPosts } from '../lib/posts';
 
-// Sermon and lecture page of the Red River Valley Chinese Christian Church,
-// as linked from the old website's 证道分享 page.
-const rrvcccUrl = 'http://cn.rrvccc.org/p/blog-page_77.html';
+// Sermon page of the Red River Valley Chinese Christian Church.
+// (The old website linked to http://cn.rrvccc.org/p/blog-page_77.html, which no longer works.)
+const rrvcccUrl = encodeURI('https://cn.rrvccc.org/证道');
 const posts = await getSermonPosts();
 const description =
   '证道与讲座分享，链接由红河谷华人基督教会提供。Sermons and lectures, with links provided by the Red River Valley Chinese Christian Church.';
