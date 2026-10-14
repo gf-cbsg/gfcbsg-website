@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import BookMark from '../components/BookMark.astro';
 import MeetingCard from '../components/MeetingCard.astro';
 import PostList from '../components/PostList.astro';
 import Todo from '../components/Todo.astro';
@@ -12,7 +11,6 @@ const latest = (await getPosts()).slice(0, 3);
 
 <Base jsonLd={organizationJsonLd()}>
   <section class="hero" aria-labelledby="site-title">
-    <BookMark class="hero-motif" />
     <div class="container hero-inner">
       <div>
         <p class="hero-eyebrow">
