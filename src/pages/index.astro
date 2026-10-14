@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+import BookMark from '../components/BookMark.astro';
+import MeetingCard from '../components/MeetingCard.astro';
+import PostList from '../components/PostList.astro';
+import Todo from '../components/Todo.astro';
+import { site } from '../config/site';
+import { getPosts } from '../lib/posts';
+
+const latest = (await getPosts()).slice(0, 3);
+---
+
+<Base>
+  <section class="hero" aria-labelledby="site-title">
+    <BookMark class="hero-motif" />
+    <div class="container hero-inner">
+      <div>
+        <p class="hero-eyebrow">
+          <span class="seal" aria-hidden="true"><span>查</span><span>经</span></span>
+          <span>
+            <span lang="zh-Hans">成立于 {site.foundedYear} 年</span> ·{' '}
+            <span lang="en">Founded {site.foundedYear}</span>
+          </span>
+        </p>
+        <h1 id="site-title">
+          <span lang="zh-Hans">{site.name.zh}</span>{' '}
+          <span lang="en">{site.name.en}</span>
+        </h1>
+        <p class="hero-intro">
+          <span lang="zh-Hans">欢迎来到大福克斯中文查经班的网站。</span>
+          <br />
+          <span lang="en">Welcome to the website of the Grand Forks Chinese Bible Study Group.</span>
+        </p>
+      </div>
+      <MeetingCard />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="welcome-title">
+    <div class="container">
+      <h2 id="welcome-title" class="bi section-head">
+        <span lang="zh-Hans">欢迎</span>{' '}
+        <span lang="en">Welcome</span>
+      </h2>
+      <div class="welcome-cols">
+        <p lang="zh-Hans">
+          大福克斯中文查经班于 2002 年在北达科他大学国际中心成立。无论您是刚到大福克斯的新朋友、北达科他大学的学生，还是在这里生活多年的家庭，我们都欢迎您加入我们，一起认识圣经。
+        </p>
+        <p lang="en">
+          The Grand Forks Chinese Bible Study Group was founded in 2002 at the University of
+          North Dakota International Center. Whether you are new to Grand Forks, a UND student, or
+          a family who has lived here for years, you are welcome to join us and get to know the
+          Bible together.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="expect-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="expect-title" class="bi">
+          <span lang="zh-Hans">初次来访</span>{' '}
+          <span lang="en">What to expect</span>
+        </h2>
+        <p class="lead">
+          <span lang="zh-Hans">第一次来？以下是一些基本信息。</span>
+          <br />
+          <span lang="en">Coming for the first time? Here is what to expect.</span>
+        </p>
+      </div>
+      <ul class="card-grid">
+        <li class="card">
+          <h3><span lang="zh-Hans">一起查经</span>{' '}<span lang="en">Studying the Bible</span></h3>
+          <p lang="zh-Hans">我们一起查考圣经。</p>
+          <p lang="en">We study the Bible together.</p>
+        </li>
+        <li class="card">
+          <h3><span lang="zh-Hans">欢迎新老朋友</span>{' '}<span lang="en">Everyone is welcome</span></h3>
+          <p lang="zh-Hans">欢迎新老朋友踊跃参加！</p>
+          <p lang="en">Newcomers and old friends alike are welcome.</p>
+        </li>
+        <li class="card">
+          <h3><span lang="zh-Hans">语言</span>{' '}<span lang="en">Language</span></h3>
+          <p><Todo /></p>
+        </li>
+        <li class="card">
+          <h3><span lang="zh-Hans">形式与时长</span>{' '}<span lang="en">Format and length</span></h3>
+          <p><Todo /></p>
+        </li>
+        <li class="card">
+          <h3><span lang="zh-Hans">带孩子来</span>{' '}<span lang="en">Bringing children</span></h3>
+          <p><Todo /></p>
+        </li>
+        <li class="card">
+          <h3><span lang="zh-Hans">聚餐与节庆</span>{' '}<span lang="en">Potlucks and celebrations</span></h3>
+          <p lang="zh-Hans">多年来，我们一起聚餐，庆祝圣诞节和春节，也邀请讲员来分享。</p>
+          <p lang="en">
+            Over the years we have shared potluck dinners, celebrated Christmas and Chinese New
+            Year, and welcomed guest speakers.
+          </p>
+        </li>
+      </ul>
+      <p class="section-foot">
+        <span lang="zh-Hans">还有其他问题？欢迎写信给我们：</span><a
+          href={`mailto:${site.email}`}>{site.email}</a
+        >
+        <br />
+        <span lang="en">Other questions? Email us at the address above.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="events-title">
+    <div class="container">
+      <h2 id="events-title" class="bi section-head">
+        <span lang="zh-Hans">近期活动</span>{' '}
+        <span lang="en">Upcoming events</span>
+      </h2>
+      <div class="callout">
+        <p>
+          <span lang="zh-Hans">活动安排都发布在我们的 Google 日历上。</span>
+          <br />
+          <span lang="en">Our events are posted on our Google Calendar.</span>
+        </p>
+        <a class="button" href="/events/">
+          <span lang="zh-Hans">查看活动日历</span>{' '}
+          <span lang="en">View the calendar</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="posts-title">
+    <div class="container">
+      <h2 id="posts-title" class="bi section-head">
+        <span lang="zh-Hans">最新文章</span>{' '}
+        <span lang="en">Latest posts</span>
+      </h2>
+      <PostList posts={latest} layout="grid" />
+      <p class="section-foot">
+        <a href="/archive/">
+          <span lang="zh-Hans">查看全部历年活动</span>{' '}
+          <span lang="en">See all posts</span> →
+        </a>
+      </p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,73 @@
+---
+// The "Join us" card on the Home page. Its contents come from
+// src/config/site.ts; unconfirmed fields show a TODO marker.
+import { meeting, mapUrl, site, venueAddress } from '../config/site';
+import Todo from './Todo.astro';
+
+const { day, time, venue } = meeting;
+const when =
+  day && time
+    ? {
+        headingZh: `欢迎${day.zh}${time.zh} 来参加`,
+        headingEn: `Join us this ${day.en}, ${time.en}`,
+        zh: `每${day.zh}${time.zh}`,
+        en: `${day.en}s, ${time.en}`,
+      }
+    : null;
+---
+
+<section class="meeting-card" aria-labelledby="meeting-title">
+  <h2 id="meeting-title" class="bi">
+    <span lang="zh-Hans">{when ? when.headingZh : '聚会信息'}</span>{' '}
+    <span lang="en">{when ? when.headingEn : 'Meeting details'}</span>
+  </h2>
+
+  <dl class="facts">
+    <div>
+      <dt><span lang="zh-Hans">时间</span> <span lang="en">When</span></dt>
+      <dd>
+        {
+          when ? (
+            <>
+              <span lang="zh-Hans">{when.zh}</span>
+              <br />
+              <span lang="en">{when.en}</span>
+            </>
+          ) : (
+            <Todo />
+          )
+        }
+      </dd>
+    </div>
+    <div>
+      <dt><span lang="zh-Hans">地点</span> <span lang="en">Where</span></dt>
+      <dd>
+        {
+          venue ? (
+            <address lang="en">
+              {venue.name}
+              <br />
+              {venueAddress(venue)}
+            </address>
+          ) : (
+            <Todo />
+          )
+        }
+      </dd>
+    </div>
+  </dl>
+
+  {
+    venue && (
+      <a class="button button-quiet" href={mapUrl(venue)}>
+        <span lang="zh-Hans">在地图上查看</span>{' '}
+        <span lang="en">View map</span>
+      </a>
+    )
+  }
+
+  <p class="meeting-contact">
+    <span lang="zh-Hans">有问题？欢迎<a href={`mailto:${site.email}`}>写信给我们</a>。</span>{' '}
+    <span lang="en">Questions? <a href={`mailto:${site.email}`}>Email us</a>.</span>
+  </p>
+</section>

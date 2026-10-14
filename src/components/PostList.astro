@@ -1,0 +1,25 @@
+---
+import { isoDate, postUrl, type Post } from '../lib/posts';
+
+interface Props {
+  posts: Post[];
+  /** 'grid' shows the posts as a row of cards on wide screens. */
+  layout?: 'list' | 'grid';
+}
+const { posts, layout = 'list' } = Astro.props;
+---
+
+<ul class:list={['post-list', { 'post-grid': layout === 'grid' }]}>
+  {
+    posts.map((post) => (
+      <li>
+        <a href={postUrl(post)}>
+          <span class="post-title" lang={post.data.lang}>
+            {post.data.title}
+          </span>
+          <time datetime={isoDate(post.data.date)}>{isoDate(post.data.date)}</time>
+        </a>
+      </li>
+    ))
+  }
+</ul>
