@@ -3,12 +3,12 @@ import Base from '../layouts/Base.astro';
 import PostList from '../components/PostList.astro';
 import { getSermonPosts } from '../lib/posts';
 
-// Sermon page of the Red River Valley Chinese Christian Church.
+// Sermon page of the Red River Valley Chinese Christian Church in Fargo (a separate church).
 // (The old website linked to http://cn.rrvccc.org/p/blog-page_77.html, which no longer works.)
 const rrvcccUrl = encodeURI('https://cn.rrvccc.org/证道');
 const posts = await getSermonPosts();
 const description =
-  '证道与讲座分享，链接由红河谷华人基督教会提供。Sermons and lectures, with links provided by the Red River Valley Chinese Christian Church.';
+  '证道与讲座分享，链接由位于 Fargo 的红河谷华人基督教会提供。Sermons and lectures from the Red River Valley Chinese Christian Church in Fargo.';
 ---
 
 <Base title="证道分享 Sermons" description={description}>
@@ -19,16 +19,20 @@ const description =
     </h1>
     <div class="callout">
       <p>
-        <span lang="zh-Hans">证道讲座分享链接由红河谷华人基督教会提供。</span>
+        <span lang="zh-Hans">
+          以下证道与讲座由位于 Fargo 的红河谷华人基督教会提供，点击后将打开该教会的网站。
+        </span>
         <br />
         <span lang="en">
-          Links to sermons and lectures are provided by the Red River Valley Chinese Christian
-          Church.
+          These sermons and lectures are from the Red River Valley Chinese Christian Church in
+          Fargo. The link opens that church's website.
         </span>
       </p>
-      <a class="button" href={rrvcccUrl}>
-        <span lang="zh-Hans">证道 | 讲座</span>{' '}
-        <span lang="en">Sermons and lectures</span>
+      <a class="button button-external" href={rrvcccUrl}>
+        <span class="badge" lang="en">Fargo</span>
+        <span lang="zh-Hans">教会证道 | 讲座</span>{' '}
+        <span lang="en">Church sermons &amp; lectures</span>
+        <span aria-hidden="true">↗</span>
       </a>
     </div>
   </section>

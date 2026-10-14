@@ -229,6 +229,17 @@ main:focus {
   text-decoration: underline;
 }
 
+/* A short highlighted label inside a button, e.g. "Fargo". */
+.button .badge {
+  padding: 0.1em 0.55em;
+  border-radius: 999px;
+  background: var(--on-accent);
+  color: var(--accent);
+  font-size: 0.9em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .button-quiet {
   background: transparent;
   color: var(--accent);
