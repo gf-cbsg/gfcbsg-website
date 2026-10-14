@@ -244,7 +244,9 @@ After the DNS move, the old site stays reachable at `sites.google.com/view/gfcbs
 
 ## TODO: confirm
 
-This is the single list of unknowns. Each will appear on the site as a visible `TODO: confirm` marker until resolved.
+> **Superseded.** The current, single list of open items is [`MIGRATION_TODO.md`](../MIGRATION_TODO.md). The list below is kept as it was at checkpoint 1.
+
+This was the list of unknowns at checkpoint 1.
 
 1. **Meeting day and time.** The brief says Fridays 7:30 pm, but there are no meetings at present. This affects the Home hero, Contact and footer.
 2. **Meeting venue.** Faith Evangelical Free Church, 1400 24th Ave S, Grand Forks, ND 58201 is unconfirmed as a current venue. This affects Home, Contact, the map embed and the JSON-LD `Place`. Also: should the church address appear while there are no meetings?
