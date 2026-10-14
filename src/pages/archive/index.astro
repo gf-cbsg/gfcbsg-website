@@ -1,8 +1,37 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ComingSoon from '../../components/ComingSoon.astro';
+import PostList from '../../components/PostList.astro';
+import YearNav from '../../components/YearNav.astro';
+import { getPosts, groupByYear } from '../../lib/posts';
+
+const groups = groupByYear(await getPosts());
+const years = groups.map((group) => group.year);
+const description =
+  '大福克斯中文查经班历年活动与文章，按时间从新到旧排列。All posts and past events of the Grand Forks Chinese Bible Study Group, newest first.';
 ---
 
-<Base title="历年活动 Archive">
-  <ComingSoon zh="历年活动" en="Archive" />
+<Base title="历年活动 Archive" description={description}>
+  <section class="container page-head">
+    <h1 class="bi">
+      <span lang="zh-Hans">历年活动</span>{' '}
+      <span lang="en">Archive</span>
+    </h1>
+    <p class="lead">
+      <span lang="zh-Hans">所有文章，按时间从新到旧排列。</span>
+      <br />
+      <span lang="en">All posts, newest first.</span>
+    </p>
+    <YearNav years={years} />
+  </section>
+
+  {
+    groups.map(({ year, posts }) => (
+      <section class="container archive-year" aria-labelledby={`year-${year}`}>
+        <h2 id={`year-${year}`}>
+          <a href={`/archive/${year}/`}>{year}</a>
+        </h2>
+        <PostList posts={posts} />
+      </section>
+    ))
+  }
 </Base>

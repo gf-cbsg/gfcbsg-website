@@ -1,8 +1,151 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import ComingSoon from '../components/ComingSoon.astro';
+import Todo from '../components/Todo.astro';
+import { Content as Minutes } from '../data/minutes-2002.md';
+import groupPhoto from '../assets/legacy/gfcbsg-group-photo-living-room.jpg';
+
+const description =
+  '大福克斯中文查经班的简介和历史：2002 年 10 月 20 日在北达科他大学国际中心成立。' +
+  'About the Grand Forks Chinese Bible Study Group and its founding on October 20, 2002.';
 ---
 
-<Base title="关于我们 About">
-  <ComingSoon zh="关于我们" en="About" />
+<Base title="关于我们 About" description={description}>
+  <section class="container page-head">
+    <h1 class="bi">
+      <span lang="zh-Hans">关于我们</span>{' '}
+      <span lang="en">About us</span>
+    </h1>
+    <div class="welcome-cols">
+      <p lang="zh-Hans">
+        大福克斯中文查经班（GFCBSG）是北达科他州大福克斯的一个中文查经班，成立于 2002
+        年。多年来，我们一起查考圣经、聚餐，庆祝圣诞节和春节，也邀请讲员来分享。欢迎新老朋友！
+      </p>
+      <p lang="en">
+        The Grand Forks Chinese Bible Study Group (GFCBSG) is a Chinese Bible study group in
+        Grand Forks, North Dakota, founded in 2002. Over the years we have studied the Bible
+        together, shared potluck dinners, celebrated Christmas and Chinese New Year, and welcomed
+        guest speakers. Newcomers and old friends alike are welcome.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="history-title">
+    <div class="container">
+      <h2 id="history-title" class="bi section-head">
+        <span lang="zh-Hans">我们的历史</span>{' '}
+        <span lang="en">Our history</span>
+      </h2>
+      <div class="welcome-cols">
+        <div lang="zh-Hans">
+          <p>
+            2002 年 10 月，北达科他大学校园举办了为期三天的福音聚会。聚会之后，2002 年 10 月 20
+            日（星期日），查经班的筹备会议在北达科他大学国际中心召开。会议由 Abraham Hsueh
+            牧师主持，他也应邀担任新成立的查经班的顾问。
+          </p>
+          <p>
+            会上，与会者一一分享了参加福音聚会的感受和见证。Hsueh
+            牧师勉励大家，并提出了三个步骤：第一，成立中文查经班，定期、系统地查考圣经；第二，建立教会，在本地区向华人广传福音；第三，寻找牧者牧养群羊。
+          </p>
+          <p>
+            会议讨论了查经班的名称（UND-CBSG 或
+            GGF-CBSG，当天没有作出最后决定），并推选了六位同工，首届任期六个月（2002 年 10 月至
+            2003 年 4 月）。查经班定于每周五晚上 7 点到 9 点聚会，由四个家庭轮流开放家庭作为聚会地点。
+          </p>
+          <p>
+            2002 年 11 月 1
+            日，查经班举行了第一次查经（会议原定在 Chen 家举行）。按照计划，大家先用两周时间学习《创世记》前四章，之后查考《约翰福音》、《使徒行传》和《罗马书》。
+          </p>
+          <p>
+            此后多年，查经班邀请了 Clement Yeung 医生、Chuck Kwok 博士、高德荣牧师（Pastor
+            Ko）和庄祖鲲牧师等讲员来分享，举办聚餐、圣诞节和春节庆祝活动及见证分享，也接待了来访的短宣队。往年的活动记录请见<a
+              href="/archive/">历年活动</a
+            >。
+          </p>
+        </div>
+        <div lang="en">
+          <p>
+            In October 2002, a three-day evangelical event was held on the University of North
+            Dakota campus. Following it, on Sunday, October 20, 2002, an organizational meeting was
+            held at the UND International Center. Rev. Abraham Hsueh facilitated the meeting and
+            agreed to serve as the new group's consultant.
+          </p>
+          <p>
+            One by one, the attendees shared their experiences and testimonies from the event.
+            Rev. Hsueh encouraged them and set out three steps: first, establish a Chinese Bible
+            study group and study the Bible regularly and systematically; second, plant a church
+            and spread the gospel among Chinese people in the region; and third, find a pastor to
+            shepherd the congregation.
+          </p>
+          <p>
+            The meeting discussed a name for the group (UND-CBSG or GGF-CBSG; no final decision
+            was made that day) and chose six coworkers for an initial six-month term, October 2002
+            to April 2003. The group would meet every Friday night from 7 to 9 pm, rotating among
+            four families who offered their homes.
+          </p>
+          <p>
+            The first Bible study took place on November 1, 2002; the meeting had planned it for
+            the Chen family's home. The plan was to spend two weeks on the first four chapters of
+            Genesis, then study John, Acts and Romans.
+          </p>
+          <p>
+            Over the years the group has welcomed guest speakers including Dr. Clement Yeung, Dr.
+            Chuck Kwok, Pastor Ko and Pastor Tsu-Kung Chuang, shared potlucks, celebrated Christmas
+            and Chinese New Year, heard testimonies, and hosted a visiting short-term mission team.
+            See the <a href="/archive/">archive</a> for past events.
+          </p>
+        </div>
+      </div>
+
+      <figure class="photo">
+        <Image
+          src={groupPhoto}
+          alt="Group photo of about 45 adults and children gathered in a living room"
+        />
+        <figcaption>
+          <span lang="zh-Hans">查经班合影</span>{' '}
+          <span lang="en">Group photo</span> ·{' '}
+          <span lang="zh-Hans">日期</span>{' '}
+          <span lang="en">Date:</span>
+          <Todo />
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="minutes-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="minutes-title" class="bi">
+          <span lang="zh-Hans">2002 年筹备会议记录</span>{' '}
+          <span lang="en">Minutes of the 2002 organizational meeting</span>
+        </h2>
+        <p class="lead">
+          <span lang="zh-Hans">以下是 2002 年 10 月 20 日筹备会议的原始记录（英文），由 Jean Chen 记录。</span>
+          <br />
+          <span lang="en">
+            The original minutes of the organizational meeting on October 20, 2002, recorded by
+            Jean Chen.
+          </span>
+        </p>
+      </div>
+      <article class="archive-doc" lang="en">
+        <Minutes />
+      </article>
+      <aside class="note">
+        <p>
+          <span lang="zh-Hans">
+            编者注：原文两处把“Hsueh”误拼为“Hsush”，已更正。另有姓名在原文中拼写不一致（Shu-Fen
+            Shih / Shih-Fen Shih；Shen Yang / Yang Shen），保留原样。
+          </span>
+          <span lang="en">
+            Editor's note: two misspellings of “Hsueh” as “Hsush” have been corrected. Some other
+            names are spelled inconsistently in the original (Shu-Fen Shih / Shih-Fen Shih; Shen
+            Yang / Yang Shen) and are left as written.
+          </span>
+          <span><Todo /></span>
+        </p>
+      </aside>
+    </div>
+  </section>
 </Base>

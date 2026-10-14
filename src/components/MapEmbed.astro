@@ -1,0 +1,30 @@
+---
+// Embedded Google Map of the meeting place. Shows a TODO marker until the
+// venue is confirmed in src/config/site.ts.
+import { meeting, venueAddress } from '../config/site';
+import Todo from './Todo.astro';
+
+const { venue } = meeting;
+const src = venue
+  ? `https://www.google.com/maps?output=embed&q=${encodeURIComponent(`${venue.name}, ${venueAddress(venue)}`)}`
+  : null;
+---
+
+{
+  src && venue ? (
+    <div class="map-frame">
+      <iframe
+        src={src}
+        title={`${venue.name} 地图 Map`}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      />
+    </div>
+  ) : (
+    <div class="map-frame map-placeholder">
+      <p>
+        <span lang="zh-Hans">地图</span> <span lang="en">Map</span>: <Todo />
+      </p>
+    </div>
+  )
+}

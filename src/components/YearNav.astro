@@ -1,0 +1,28 @@
+---
+// Year filter for the archive: links to /archive/ and one page per year.
+interface Props {
+  years: number[];
+  current?: number;
+}
+const { years, current } = Astro.props;
+---
+
+<nav class="year-nav" aria-label="按年份筛选 Filter by year">
+  <ul>
+    <li>
+      <a href="/archive/" aria-current={current === undefined ? 'page' : undefined}>
+        <span lang="zh-Hans">全部</span>{' '}
+        <span lang="en">All</span>
+      </a>
+    </li>
+    {
+      years.map((year) => (
+        <li>
+          <a href={`/archive/${year}/`} aria-current={current === year ? 'page' : undefined}>
+            {year}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

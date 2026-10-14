@@ -18,6 +18,9 @@ const posts = defineCollection({
     // Set to true when the original post linked to files that are no longer
     // publicly available. The page then shows a standard note saying so.
     missing_attachment: z.boolean().default(false),
+    // Set to true for sermons, talks and their recordings or slides.
+    // These posts are also listed on the Sermons page.
+    sermon: z.boolean().default(false),
   }),
 });
 

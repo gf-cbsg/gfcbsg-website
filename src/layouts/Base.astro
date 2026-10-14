@@ -13,9 +13,17 @@ interface Props {
   /** Main language of the page. Bilingual pages use 'zh-Hans'. */
   lang?: Lang;
   type?: 'website' | 'article';
+  /** Structured data (schema.org) to embed as JSON-LD. */
+  jsonLd?: Record<string, unknown>;
 }
 
-const { title, description = site.description, lang = 'zh-Hans', type = 'website' } = Astro.props;
+const {
+  title,
+  description = site.description,
+  lang = 'zh-Hans',
+  type = 'website',
+  jsonLd,
+} = Astro.props;
 
 const fullTitle = title
   ? `${title} · ${site.name.zh} ${site.shortName}`
@@ -48,6 +56,7 @@ const ogLocale: Record<Lang, string> = { 'zh-Hans': 'zh_CN', 'zh-Hant': 'zh_TW',
         .filter(([key]) => key !== lang && key !== 'zh-Hant')
         .map(([, locale]) => <meta property="og:locale:alternate" content={locale} />)
     }
+    {jsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}
     <slot name="head" />
   </head>
   <body>

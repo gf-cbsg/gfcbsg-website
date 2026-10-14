@@ -4,13 +4,13 @@ import BookMark from '../components/BookMark.astro';
 import MeetingCard from '../components/MeetingCard.astro';
 import PostList from '../components/PostList.astro';
 import Todo from '../components/Todo.astro';
-import { site } from '../config/site';
+import { organizationJsonLd, site } from '../config/site';
 import { getPosts } from '../lib/posts';
 
 const latest = (await getPosts()).slice(0, 3);
 ---
 
-<Base>
+<Base jsonLd={organizationJsonLd()}>
   <section class="hero" aria-labelledby="site-title">
     <BookMark class="hero-motif" />
     <div class="container hero-inner">

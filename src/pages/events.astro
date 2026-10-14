@@ -1,8 +1,67 @@
 ---
 import Base from '../layouts/Base.astro';
-import ComingSoon from '../components/ComingSoon.astro';
+import Todo from '../components/Todo.astro';
+import { site } from '../config/site';
+
+const calendar = encodeURIComponent(site.calendarId);
+const embedUrl =
+  `https://calendar.google.com/calendar/embed?src=${calendar}` +
+  '&ctz=America%2FChicago&mode=AGENDA&showTitle=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0';
+const openUrl = `https://calendar.google.com/calendar/embed?src=${calendar}&ctz=America%2FChicago`;
+// Google's "add this calendar" link takes the calendar ID in base64.
+const addUrl = `https://calendar.google.com/calendar/u/0?cid=${btoa(site.calendarId).replace(/=+$/, '')}`;
+const description =
+  '大福克斯中文查经班的活动日历。The Grand Forks Chinese Bible Study Group events calendar.';
 ---
 
-<Base title="活动 Events">
-  <ComingSoon zh="活动" en="Events" />
+<Base title="活动 Events" description={description}>
+  <section class="container page-head">
+    <h1 class="bi">
+      <span lang="zh-Hans">活动</span>{' '}
+      <span lang="en">Events</span>
+    </h1>
+    <p class="lead">
+      <span lang="zh-Hans">活动安排都发布在我们的 Google 日历上。</span>
+      <br />
+      <span lang="en">Our events are posted on our Google Calendar.</span>
+    </p>
+  </section>
+
+  <section class="container" aria-label="Google 日历 Google Calendar">
+    <div class="calendar-frame">
+      <iframe src={embedUrl} title="大福克斯中文查经班活动日历 GFCBSG events calendar" loading="lazy"
+      ></iframe>
+    </div>
+    <ul class="link-row">
+      <li>
+        <a href={openUrl}>
+          <span lang="zh-Hans">在 Google 日历中打开</span>{' '}
+          <span lang="en">Open in Google Calendar</span>
+        </a>
+      </li>
+      <li>
+        <a href={addUrl}>
+          <span lang="zh-Hans">添加到我的 Google 日历</span>{' '}
+          <span lang="en">Add to my Google Calendar</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="updates-title">
+    <div class="container">
+      <h2 id="updates-title" class="bi section-head">
+        <span lang="zh-Hans">通过电子邮件接收活动通知</span>{' '}
+        <span lang="en">Getting updates by email</span>
+      </h2>
+      <p><Todo /></p>
+      <p>
+        <span lang="zh-Hans">有问题？欢迎写信给我们：</span><a href={`mailto:${site.email}`}
+          >{site.email}</a
+        >
+        <br />
+        <span lang="en">Questions? Email us at the address above.</span>
+      </p>
+    </div>
+  </section>
 </Base>

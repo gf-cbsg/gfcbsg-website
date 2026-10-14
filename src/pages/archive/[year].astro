@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import YearNav from '../../components/YearNav.astro';
+import { getPosts, groupByYear, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const groups = groupByYear(await getPosts());
+  const years = groups.map((group) => group.year);
+  return groups.map(({ year, posts }) => ({
+    params: { year: String(year) },
+    props: { year, posts, years },
+  }));
+}
+
+interface Props {
+  year: number;
+  posts: Post[];
+  years: number[];
+}
+const { year, posts, years } = Astro.props;
+const description = `大福克斯中文查经班 ${year} 年的活动与文章。Posts and events of the Grand Forks Chinese Bible Study Group from ${year}.`;
+---
+
+<Base title={`历年活动 ${year} Archive`} description={description}>
+  <section class="container page-head">
+    <p class="crumb">
+      <a href="/archive/">← <span lang="zh-Hans">历年活动</span> <span lang="en">Archive</span></a>
+    </p>
+    <h1 class="bi">
+      <span lang="zh-Hans">{year} 年</span>{' '}
+      <span lang="en">{year}</span>
+    </h1>
+    <YearNav years={years} current={year} />
+  </section>
+  <section class="container archive-year">
+    <PostList posts={posts} />
+  </section>
+</Base>

@@ -1,8 +1,45 @@
 ---
 import Base from '../layouts/Base.astro';
-import ComingSoon from '../components/ComingSoon.astro';
+import PostList from '../components/PostList.astro';
+import { getSermonPosts } from '../lib/posts';
+
+// Sermon and lecture page of the Red River Valley Chinese Christian Church,
+// as linked from the old website's 证道分享 page.
+const rrvcccUrl = 'http://cn.rrvccc.org/p/blog-page_77.html';
+const posts = await getSermonPosts();
+const description =
+  '证道与讲座分享，链接由红河谷华人基督教会提供。Sermons and lectures, with links provided by the Red River Valley Chinese Christian Church.';
 ---
 
-<Base title="证道分享 Sermons">
-  <ComingSoon zh="证道分享" en="Sermons" />
+<Base title="证道分享 Sermons" description={description}>
+  <section class="container page-head">
+    <h1 class="bi">
+      <span lang="zh-Hans">证道分享</span>{' '}
+      <span lang="en">Sermons</span>
+    </h1>
+    <div class="callout">
+      <p>
+        <span lang="zh-Hans">证道讲座分享链接由红河谷华人基督教会提供。</span>
+        <br />
+        <span lang="en">
+          Links to sermons and lectures are provided by the Red River Valley Chinese Christian
+          Church.
+        </span>
+      </p>
+      <a class="button" href={rrvcccUrl}>
+        <span lang="zh-Hans">证道 | 讲座</span>{' '}
+        <span lang="en">Sermons and lectures</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="sermon-posts-title">
+    <div class="container">
+      <h2 id="sermon-posts-title" class="bi section-head">
+        <span lang="zh-Hans">往期证道分享</span>{' '}
+        <span lang="en">Archived sermon posts</span>
+      </h2>
+      <PostList posts={posts} />
+    </div>
+  </section>
 </Base>

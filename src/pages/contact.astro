@@ -1,8 +1,53 @@
 ---
 import Base from '../layouts/Base.astro';
-import ComingSoon from '../components/ComingSoon.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import MeetingCard from '../components/MeetingCard.astro';
+import { site } from '../config/site';
+
+const description =
+  '联络大福克斯中文查经班：chinese.biblestudy.group@gmail.com。Contact the Grand Forks Chinese Bible Study Group.';
 ---
 
-<Base title="联络我们 Contact">
-  <ComingSoon zh="联络我们" en="Contact" />
+<Base title="联络我们 Contact" description={description}>
+  <section class="container page-head">
+    <h1 class="bi">
+      <span lang="zh-Hans">联络我们</span>{' '}
+      <span lang="en">Contact us</span>
+    </h1>
+  </section>
+
+  <section class="container contact-grid">
+    <div class="card contact-email">
+      <h2 class="bi">
+        <span lang="zh-Hans">电子邮件</span>{' '}
+        <span lang="en">Email</span>
+      </h2>
+      <p class="email-big"><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      <p>
+        <span lang="zh-Hans">如有任何问题，欢迎来信。</span>
+        <br />
+        <span lang="en">Please feel free to email us if you have questions.</span>
+      </p>
+    </div>
+    <MeetingCard />
+  </section>
+
+  <section class="container section-map" aria-label="地图 Map">
+    <MapEmbed />
+  </section>
+
+  {
+    /*
+      Named contacts: none are approved for publishing yet.
+      To list a contact person later (with their permission), uncomment and edit:
+
+      <section class="container">
+        <div class="card">
+          <h2 class="bi"><span lang="zh-Hans">联系人</span> <span lang="en">Contact person</span></h2>
+          <p>Name · 姓名</p>
+          <p><a href="mailto:name@example.com">name@example.com</a></p>
+        </div>
+      </section>
+    */
+  }
 </Base>
