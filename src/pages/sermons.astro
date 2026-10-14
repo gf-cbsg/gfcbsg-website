@@ -17,24 +17,6 @@ const description =
       <span lang="zh-Hans">证道分享</span>{' '}
       <span lang="en">Sermons</span>
     </h1>
-    <div class="callout">
-      <p>
-        <span lang="zh-Hans">
-          以下证道与讲座由位于 Fargo 的红河谷华人基督教会提供，点击后将打开该教会的网站。
-        </span>
-        <br />
-        <span lang="en">
-          These sermons and lectures are from the Red River Valley Chinese Christian Church in
-          Fargo. The link opens that church's website.
-        </span>
-      </p>
-      <a class="button button-external" href={rrvcccUrl}>
-        <span class="badge" lang="en">Fargo</span>
-        <span lang="zh-Hans">教会证道 | 讲座</span>{' '}
-        <span lang="en">Church sermons &amp; lectures</span>
-        <span aria-hidden="true">↗</span>
-      </a>
-    </div>
   </section>
 
   <section class="section" aria-labelledby="sermon-posts-title">
@@ -44,6 +26,33 @@ const description =
         <span lang="en">Archived sermon posts</span>
       </h2>
       <PostList posts={posts} />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fargo-sermons-title">
+    <div class="container">
+      <h2 id="fargo-sermons-title" class="bi section-head">
+        <span lang="zh-Hans">Fargo 教会证道</span>{' '}
+        <span lang="en">Sermons from the Fargo church</span>
+      </h2>
+      <div class="callout">
+        <p>
+          <span lang="zh-Hans">
+            以下证道与讲座由位于 Fargo 的红河谷华人基督教会提供，点击后将打开该教会的网站。
+          </span>
+          <br />
+          <span lang="en">
+            These sermons and lectures are from the Red River Valley Chinese Christian Church in
+            Fargo. The link opens that church's website.
+          </span>
+        </p>
+        <a class="button button-external" href={rrvcccUrl}>
+          <span class="badge" lang="en">Fargo</span>
+          <span lang="zh-Hans">教会证道 | 讲座</span>{' '}
+          <span lang="en">Church sermons &amp; lectures</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
     </div>
   </section>
 </Base>
