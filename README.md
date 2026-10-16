@@ -4,14 +4,13 @@ The website of the Grand Forks Chinese Bible Study Group, **www.gfcbsg.com**. It
 
 ## What do you want to do?
 
-| I want to… | Go to |
+| 我想… · I want to… | Go to |
 |---|---|
-| Add a news post or event | [Add a post](#add-a-post) |
-| Add a photo to a post | [Add a photo to a post](#add-a-photo-to-a-post) |
-| Add a YouTube video or a grid of photos | [Add a video](#add-a-video) · [Add several photos as a grid](#add-several-photos-as-a-grid) |
-| Link slides, PDFs or recordings from Google Drive | [Link slides, PDFs and recordings](#link-slides-pdfs-and-recordings) |
-| 用中文看发文步骤 | [快速指南：发布新文章](#快速指南发布新文章) |
-| Change the meeting time or place | [Update the meeting details](#update-the-meeting-details) |
+| 发布新文章或活动 · Publish a post or event | [Publish a post](#publish-a-post) |
+| 看填好的例子 · See a filled-in example | [A filled-in example](#a-filled-in-example) |
+| 发布出错了 · Fix an error when publishing | [Common errors](#common-errors) |
+| 了解每一项怎么填 · Look up a setting, photos, videos or Drive links | [Post reference](#post-reference) |
+| 修改聚会时间地点 · Change the meeting time or place | [Update the meeting details](#update-the-meeting-details) |
 | Fix a yellow "TODO: confirm" marker | [`MIGRATION_TODO.md`](MIGRATION_TODO.md) |
 | Change other text on a page | [Change other text](#change-other-text) |
 | Work on the site on my computer | [Run the site locally](#run-the-site-locally) |
@@ -19,44 +18,149 @@ The website of the Grand Forks Chinese Bible Study Group, **www.gfcbsg.com**. It
 
 All of these need a GitHub account with write access to `gf-cbsg/gfcbsg-website`. Ask an owner of the `gf-cbsg` organization to add you.
 
-## Add a post
+## Publish a post
 
-You can do all of this in your web browser. No software is needed.
+**发布新文章：复制模板 → 填空 → 检查 → 推送。大约两分钟后上线。**
+Copy the template, fill in the blanks, check, push. The post is live about two minutes later.
 
-1. Open the posts folder: https://github.com/gf-cbsg/gfcbsg-website/tree/main/src/content/posts
-2. Click **Add file**, then **Create new file**.
-3. In the name box, type a file name: the date, then a few English words, joined by hyphens and ending in `.md`. For example: `2026-12-20-christmas-potluck.md`. Use only lowercase letters, numbers and hyphens; no spaces or Chinese characters. The file name becomes the post's address: `www.gfcbsg.com/posts/2026-12-20-christmas-potluck/`.
-4. Paste one of the templates below into the large box and fill it in.
-5. Click **Commit changes…**, leave **Commit directly to the `main` branch** selected, and click **Commit changes**.
-6. Wait about two minutes, then open www.gfcbsg.com/archive/. Your post is listed there, and on the Home page under "Latest posts".
+### One-time setup
 
-**Template for a Chinese post:**
+**第一次使用前（每台电脑一次）。** Once per computer. Skip this if you already have the `gfcbsg-website` folder.
+
+```
+git clone git@github.com:gf-cbsg/gfcbsg-website.git
+cd gfcbsg-website
+nvm use
+npm ci
+```
+
+No `nvm`? See [Run the site locally](#run-the-site-locally) for installing Node.
+
+### Each time
+
+**1. 资料放进 Google Drive（有才做）· Files go in Google Drive (if any)**
+
+在 Google Drive 的 **CBSG活动归档** 里新建一个文件夹，名字像 `20261220讲员 - 题目`，把 PPT、PDF、录音、录像传进去。在文件上点右键 → **共享** → **复制链接**，留着第 4 步用。录像如果也在 YouTube 上，就用 YouTube 链接，手机上播放更流畅。
+
+In the **CBSG活动归档** Drive folder, make a folder named like `20261220speaker - title` and upload slides, PDFs, recordings and videos. Right-click each file → **Share** → **Copy link**. If a video is also on YouTube, use the YouTube link instead.
+
+**2. 照片放进网站文件夹（有才做）· Photos go in the site folder (if any)**
+
+挑几张照片，复制到 `src/assets/posts/` 文件夹。文件名只用小写英文、数字和连字符，例如 `2026-12-christmas-group.jpg`。JPG、PNG 都可以；iPhone 的 HEIC 照片要先转成 JPG。不用缩小，也不用自己删除定位信息，第 5 步会自动处理。
+
+Copy a few photos into `src/assets/posts/`. Name them with lowercase letters, numbers and hyphens, like `2026-12-christmas-group.jpg`. JPG and PNG work; convert iPhone HEIC photos to JPG first. Step 5 shrinks them and removes their hidden location data.
+
+**3. 新建文章 · Create the post**
+
+在 `gfcbsg-website` 文件夹里运行（文章名 = 日期 + 几个英文小写单词，用连字符连接）：
+
+In the `gfcbsg-website` folder, run this, with the date and a few lowercase English words as the name:
+
+```
+git pull
+npm run new-post -- 2026-12-20-christmas-potluck
+```
+
+This creates `src/content/posts/2026-12-20-christmas-potluck.md` from the template, with the date already filled in. The name becomes the post's address: `www.gfcbsg.com/posts/2026-12-20-christmas-potluck/`.
+
+**4. 填空 · Fill in the blanks**
+
+用 VS Code 之类的文本编辑器打开这个文件。每一项上面都有中英文说明。至少要填 `title`（标题），然后在文件最后的说明下面写正文。用不到的项目留空就行。
+
+Open the file in a text editor such as VS Code. Every setting has instructions above it in Chinese and English. Fill in at least `title`, and write the text below the note at the end. Leave anything you don't need blank.
+
+If you use TextEdit on a Mac, choose **Format → Make Plain Text** first, and turn off smart quotes (**Edit → Substitutions**).
+
+**5. 检查 · Check**
+
+```
+npm run check
+```
+
+它会先处理照片（删除定位信息、转正方向、缩小太大的照片），再试着生成整个网站。最后出现 `Complete!` 就说明没问题。如果出错，信息里会写明是哪个文件、哪一项，见下面的 [Common errors](#common-errors)。
+
+This cleans the photos (removes location data, turns them the right way up, shrinks very large ones), then builds the whole site. If it ends with `Complete!`, everything is fine. If not, the message names the file and the problem; see [Common errors](#common-errors).
+
+想先在自己电脑上看看效果，可以运行 `npm run dev`，打开 http://localhost:4321/posts/2026-12-20-christmas-potluck/ ，看完按 Ctrl+C 停止。
+
+To preview first, run `npm run dev`, open http://localhost:4321/posts/2026-12-20-christmas-potluck/, and press Ctrl+C when done.
+
+**6. 发布 · Publish**
+
+```
+git add .
+git commit -m "Add Christmas potluck post"
+git push
+```
+
+大约两分钟后，文章出现在网站上：首页“最新文章”、历年活动；如果 `sermon: true`，也会出现在证道分享页。
+
+About two minutes later the post is live: on the Home page under "Latest posts", in the Archive, and on the Sermons page if `sermon: true`.
+
+**隐私 · Privacy:** 不要写他人的电话号码或电子邮件；有儿童正脸的照片，请先征得家长同意。Don't include anyone's phone number or email address, and ask parents before posting photos that show children's faces.
+
+### Common errors
+
+`npm run check` 出错时，在信息里找下面这些字。· When `npm run check` fails, look for these words in the message.
+
+| 信息里有 · Message contains | 原因和改法 · Cause and fix |
+|---|---|
+| `title: Expected type "string"` | 标题没填。· The title is blank. |
+| `date: Expected type "date"` | 日期没填，或者不是 `2026-12-20` 这种格式。· The date is blank or not in `2026-12-20` form. |
+| `lang: Invalid option` | `lang` 只能写 `zh-Hans`、`zh-Hant` 或 `en`。· `lang` must be `zh-Hans`, `zh-Hant` or `en`. |
+| `bad indentation of a mapping entry` | 多半是标题里有英文冒号 `:`，给整个标题加上英文双引号；也可能是视频或照片那几行前面的空格不对。信息里有行号。· Usually an English colon in the title: put the whole title in "double quotes". Otherwise, the spaces before a videos or photos line are wrong. The message gives the line number. |
+| `Could not find requested image` | 照片没放进 `src/assets/posts/`，或者 `src:` 里的文件名和照片文件名不一样（大小写也要一样）。· The photo isn't in `src/assets/posts/`, or the name after `src:` doesn't match the file exactly, including capital letters. |
+| `alt: Required` | 每张照片都要写 `alt`。· Every photo needs an `alt` line. |
+| `Convert this HEIC photo to JPG first` | 把 iPhone 的 HEIC 照片转成 JPG，再删掉 HEIC 文件。· Convert the iPhone HEIC photo to JPG and delete the HEIC file. |
+| `Cannot find package`, `command not found` | 网站用到的软件有更新：运行 `npm ci`，再运行一次 `npm run check`。· The site's tools were updated: run `npm ci`, then `npm run check` again. |
+
+改好后再运行一次 `npm run check`。· Fix it and run `npm run check` again.
+
+如果没检查就推送了、而且有错：网站不会坏，只是不更新，继续显示原来的内容。改好后再推送一次即可。错误信息在 Cloudflare 的 **Workers & Pages** → `gfcbsg-website` → **Deployments** → **View build**。
+
+If a mistake was pushed without checking, the live site doesn't break: it stays as it was until a fixed version is pushed. The error is in Cloudflare under **Workers & Pages** → `gfcbsg-website` → **Deployments** → **View build**.
+
+### Without a computer setup
+
+**只用浏览器发一篇简单的文字文章。** For a quick text-only post from a web browser:
+
+1. Open the template: https://github.com/gf-cbsg/gfcbsg-website/blob/main/src/content/posts/_template.md and click **Copy raw file** (the copy icon above the file).
+2. Open the posts folder: https://github.com/gf-cbsg/gfcbsg-website/tree/main/src/content/posts, click **Add file** → **Create new file**, and name it like `2026-12-20-christmas-potluck.md`.
+3. Paste, fill in the blanks, **including the date**, and click **Commit changes…** → **Commit directly to the `main` branch** → **Commit changes**.
+
+There's no check before publishing this way; if something is wrong, the site simply doesn't update. Photos are better added from a computer: photos uploaded through the browser keep their hidden location data. On an iPhone you can remove it when sharing: **Share** → **Options** → turn off **Location**.
+
+### A filled-in example
+
+A finished post with a video, two photos and Drive links. The note lines from the template are left out to keep it short.
 
 ```markdown
 ---
 title: 2026 年圣诞节聚餐
 date: 2026-12-20
 lang: zh-Hans
+sermon: false
+description: 2026 年圣诞节，查经班在 Valley Christian Church 聚餐、唱诗、分享信息。
+videos:
+  - url: https://youtu.be/VIDEO_ID
+    title: 圣诞信息
+photos:
+  - src: ../../assets/posts/2026-12-christmas-group.jpg
+    alt: 大家在教会大厅合影
+    caption: 圣诞聚餐合影
+  - src: ../../assets/posts/2026-12-christmas-dinner.jpg
+    alt: 大家围着圆桌吃饭
 ---
 
-正文写在这里。
+12 月 20 日周五晚，查经班在 Valley Christian Church 举办圣诞聚餐。
 
-空一行就是新的一段。
+- [讲道 PPT](https://drive.google.com/file/d/FILE_ID/view)
+- [收听录音（Google Drive）](https://drive.google.com/file/d/FILE_ID/view)
 ```
 
-**Template for an English post:**
+## Post reference
 
-```markdown
----
-title: Christmas potluck 2026
-date: 2026-12-20
-lang: en
----
-
-Write the post here.
-
-Leave a blank line to start a new paragraph.
-```
+Details of each part of a post, for when the template's notes aren't enough.
 
 The lines between the two `---` lines are the post's settings. Keep both `---` lines exactly as they are.
 
@@ -65,10 +169,12 @@ The lines between the two `---` lines are the post's settings. Keep both `---` l
 | `title` | The post's title. If it contains an English colon (`:`), put the whole title in double quotes: `title: "Potluck: December 20"` |
 | `date` | The date as year-month-day, for example `2026-12-20` |
 | `lang` | `zh-Hans` for Simplified Chinese, `zh-Hant` for Traditional Chinese, `en` for English |
+| `sermon` | `true` for a sermon or talk: the post then also appears on the Sermons page. `false` or blank for an event. |
 | `description` (optional) | One sentence that search engines and link previews show |
-| `sermon` (optional) | Write `sermon: true` for a sermon or talk. The post then also appears on the Sermons page. |
-| `videos` (optional) | YouTube links to show as players at the top of the post. See [Add a video](#add-a-video). |
+| `videos` (optional) | YouTube or Google Drive links to show as players at the top of the post. See [Add a video](#add-a-video). |
 | `photos` (optional) | Photos to show as a grid at the end of the post. See [Add several photos as a grid](#add-several-photos-as-a-grid). |
+
+Optional settings can be left blank or deleted.
 
 **Formatting the text** (this is called Markdown):
 
@@ -80,16 +186,12 @@ The lines between the two `---` lines are the post's settings. Keep both `---` l
 | A bulleted list | Start each line with `- ` |
 | A subheading | Start the line with `## ` |
 
-**If something goes wrong:** if a post has a mistake, the site doesn't update, and the live site stays exactly as it was. The usual causes are a missing `---` line, a date that isn't in `2026-12-20` form, or a title with an English colon that isn't in quotes. Fix the file and commit again. The error message is in the build log in Cloudflare (see [Deploy](#deploy)).
-
-**Privacy:** don't put anyone's personal phone number or email address in a post without their permission. Ask before posting photos of people, especially children.
-
 ### Add a photo to a post
 
-1. Open the photo folder: https://github.com/gf-cbsg/gfcbsg-website/tree/main/src/assets/posts
-2. Before uploading, rename the photo on your computer to lowercase words joined by hyphens, for example `2026-12-christmas-group.jpg`. JPG and PNG both work. Any size straight from a phone is fine; the site resizes photos automatically.
-3. Click **Add file**, then **Upload files**, and drag the photo in. Commit directly to the `main` branch.
-4. In your post, on a line of its own, write:
+Photos usually go in the template's `photos` list, which shows them as a grid at the end of the post (see [Add several photos as a grid](#add-several-photos-as-a-grid)). To place one photo inside the text instead:
+
+1. Put the photo in `src/assets/posts/`, named with lowercase words joined by hyphens, for example `2026-12-christmas-group.jpg`. JPG and PNG both work. Any size straight from a phone is fine; `npm run check` shrinks it and removes its location data.
+2. In your post, on a line of its own, write:
 
    ```markdown
    ![A short description of what the photo shows](../../assets/posts/2026-12-christmas-group.jpg)
@@ -97,11 +199,11 @@ The lines between the two `---` lines are the post's settings. Keep both `---` l
 
    The description between `[` and `]` is read aloud to people who can't see the photo, so describe what's in it. Keep the `../../assets/posts/` part exactly as shown.
 
-Upload the photo **before** saving the post that uses it. If the post comes first, the site won't update until the photo is there.
+Commit the photo together with the post, or before it. If the post arrives first, the site won't update until the photo is there.
 
 ### Add a video
 
-To show a YouTube video as a player at the top of a post, add a `videos` setting between the `---` lines, with the link copied from YouTube:
+To show a YouTube video as a player at the top of a post, put the link copied from YouTube under `videos` between the `---` lines. The template already has this setting:
 
 ```markdown
 ---
@@ -149,8 +251,8 @@ If a video is also on YouTube, put the YouTube link under `videos` instead: it p
 
 For more than one or two photos, a grid looks tidier than photos placed one under another in the text.
 
-1. Upload the photos to https://github.com/gf-cbsg/gfcbsg-website/tree/main/src/assets/posts, as in [Add a photo to a post](#add-a-photo-to-a-post).
-2. Add a `photos` setting between the `---` lines. Each photo needs its file (`src`) and a short description (`alt`); a caption is optional:
+1. Put the photos in `src/assets/posts/`, as in [Add a photo to a post](#add-a-photo-to-a-post).
+2. List them under `photos` between the `---` lines. The template already has this list: delete the `# ` at the start of its example lines and change them. Each photo needs its file (`src`) and a short description (`alt`); a caption is optional:
 
    ```markdown
    ---
@@ -169,45 +271,6 @@ For more than one or two photos, a grid looks tidier than photos placed one unde
    Keep the indentation exactly as shown: two spaces before each `-`, and four spaces before `alt` and `caption`.
 
 The grid appears at the end of the post. Clicking a photo opens it large on the same page, with a "返回 Back" button and previous/next buttons. The archive and Sermons lists mark the post with a "照片 Photos" tag.
-
-## 快速指南：发布新文章
-
-全部操作都可以在浏览器里完成。
-
-1. 打开文章文件夹：https://github.com/gf-cbsg/gfcbsg-website/tree/main/src/content/posts
-2. 点击 **Add file**，再点 **Create new file**。
-3. 填写文件名：日期 + 几个英文单词，用连字符连接，以 `.md` 结尾，例如 `2026-12-20-christmas-potluck.md`。只能用小写字母、数字和连字符，不要用空格或中文。
-4. 把上面的“Template for a Chinese post”整段复制进大输入框，修改标题（title）、日期（date）和正文。`lang` 写 `zh-Hans`（简体）或 `zh-Hant`（繁体）。
-5. 点击 **Commit changes…**，保持选中 **Commit directly to the `main` branch**，再点 **Commit changes**。
-6. 大约两分钟后，打开 www.gfcbsg.com/archive/ 就能看到新文章，首页的“最新文章”里也会显示。
-
-**添加照片：** 先把照片改成英文小写文件名（例如 `2026-12-christmas-group.jpg`），上传到 https://github.com/gf-cbsg/gfcbsg-website/tree/main/src/assets/posts （**Add file** → **Upload files**），然后在文章里另起一行写：
-
-```markdown
-![照片内容的简短说明](../../assets/posts/2026-12-christmas-group.jpg)
-```
-
-请先上传照片，再保存文章。
-
-**添加 YouTube 视频：** 在两行 `---` 之间加上 `videos`，下面每行写一个视频链接（行首是两个空格、一个连字符和一个空格）。视频会以播放器的形式显示在文章最上面：
-
-```markdown
-videos:
-  - https://www.youtube.com/watch?v=VIDEO_ID
-```
-
-**多张照片排成照片墙：** 先上传照片，然后在两行 `---` 之间加上 `photos`。每张照片写文件路径（`src`）和简短说明（`alt`），`caption`（图片说明文字）可写可不写。注意缩进要和例子完全一样：
-
-```markdown
-photos:
-  - src: ../../assets/posts/2026-12-christmas-dumplings.jpg
-    alt: 大家一起包饺子
-    caption: 包饺子
-  - src: ../../assets/posts/2026-12-christmas-children.jpg
-    alt: 孩子们表演节目
-```
-
-**注意隐私：** 未经本人同意，不要在文章中公开他人的电话号码或电子邮件；发布有人物（特别是儿童）的照片前请先征得同意。
 
 ## Update the meeting details
 
@@ -272,8 +335,11 @@ Then open http://localhost:4321. The page reloads when you save a file. Press `C
 |---|---|
 | `nvm use` | Switches to the Node version in `.nvmrc`. Without nvm, install Node 22.22.0 another way (for example `brew install node@22` on a Mac). |
 | `npm ci` | Installs the exact dependency versions from `package-lock.json`. Run it again after pulling changes. |
+| `npm run new-post -- 2026-12-20-name` | Creates a new post from `src/content/posts/_template.md`, with the date filled in. See [Publish a post](#publish-a-post). |
+| `npm run check` | Cleans the photos in `src/assets/posts/` (`npm run photos`), then builds the site. Run this before pushing to `main`. |
+| `npm run photos` | Only cleans the photos: removes hidden metadata such as GPS location, turns them the right way up, and shrinks any longer than 2400 pixels. Photos that are already clean are left alone. |
 | `npm run dev` | Runs the site locally at http://localhost:4321 and updates it as you edit. |
-| `npm run build` | Builds the production site into `dist/`. Run this before pushing to `main`. |
+| `npm run build` | Builds the production site into `dist/`. This is what Cloudflare runs. |
 | `npm run preview` | Serves the built `dist/` folder locally, to check exactly what will be published. |
 | `npx wrangler dev` | Serves `dist/` the way Cloudflare does, using `wrangler.jsonc`, including the redirects in `public/_redirects` (run `npm run build` first). |
 

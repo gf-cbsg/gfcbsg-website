@@ -10,13 +10,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "new-post": "node scripts/new-post.mjs",
+    "photos": "node scripts/clean-photos.mjs",
+    "check": "node scripts/clean-photos.mjs && astro build"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
     "astro": "7.3.5"
   },
   "devDependencies": {
+    "sharp": "0.35.5",
     "wrangler": "4.145.0"
   }
 }
