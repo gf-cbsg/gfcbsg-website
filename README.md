@@ -9,6 +9,7 @@ The website of the Grand Forks Chinese Bible Study Group, **www.gfcbsg.com**. It
 | Add a news post or event | [Add a post](#add-a-post) |
 | Add a photo to a post | [Add a photo to a post](#add-a-photo-to-a-post) |
 | Add a YouTube video or a grid of photos | [Add a video](#add-a-video) · [Add several photos as a grid](#add-several-photos-as-a-grid) |
+| Link slides, PDFs or recordings from Google Drive | [Link slides, PDFs and recordings](#link-slides-pdfs-and-recordings) |
 | 用中文看发文步骤 | [快速指南：发布新文章](#快速指南发布新文章) |
 | Change the meeting time or place | [Update the meeting details](#update-the-meeting-details) |
 | Fix a yellow "TODO: confirm" marker | [`MIGRATION_TODO.md`](MIGRATION_TODO.md) |
@@ -128,6 +129,21 @@ videos:
 - The archive and Sermons lists mark the post with a "视频 Video" tag.
 
 The player uses YouTube's privacy-enhanced mode, so no YouTube cookies are set until someone presses play.
+
+### Link slides, PDFs and recordings
+
+Keep slides, PDFs, audio recordings and long videos in the group's Google Drive folder **CBSG活动归档**, one folder per gathering named like `20261220讲员 - 题目`. The site links to them instead of storing them.
+
+1. Upload the files to the Drive folder. Files inherit the folder's "Anyone with the link" sharing.
+2. In Drive, right-click a file → **Share** → **Copy link**.
+3. In the post, add one line per file:
+
+   ```markdown
+   - [讲道 PPT](https://drive.google.com/file/d/FILE_ID/view)
+   - [收听录音（Google Drive）](https://drive.google.com/file/d/FILE_ID/view)
+   ```
+
+If a video is also on YouTube, put the YouTube link under `videos` instead: it plays more smoothly on phones. Photos are the exception: upload them to the site as in [Add several photos as a grid](#add-several-photos-as-a-grid), so they load fast and open in the photo viewer.
 
 ### Add several photos as a grid
 

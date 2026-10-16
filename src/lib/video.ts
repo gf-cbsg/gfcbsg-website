@@ -57,10 +57,13 @@ export function parseVideoUrl(raw: string): Video | null {
       url.pathname.match(/^\/file\/d\/([A-Za-z0-9_-]+)/)?.[1] ??
       (url.pathname === '/open' ? url.searchParams.get('id') : null);
     if (driveId) {
+      // Older shared files only open when the link keeps its resource key.
+      const key = url.searchParams.get('resourcekey');
+      const query = key ? `?resourcekey=${encodeURIComponent(key)}` : '';
       return {
         kind: 'drive',
-        embedUrl: `https://drive.google.com/file/d/${driveId}/preview`,
-        watchUrl: `https://drive.google.com/file/d/${driveId}/view`,
+        embedUrl: `https://drive.google.com/file/d/${driveId}/preview${query}`,
+        watchUrl: `https://drive.google.com/file/d/${driveId}/view${query}`,
       };
     }
   }
