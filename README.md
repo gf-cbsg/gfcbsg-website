@@ -152,7 +152,7 @@ For more than one or two photos, a grid looks tidier than photos placed one unde
 
    Keep the indentation exactly as shown: two spaces before each `-`, and four spaces before `alt` and `caption`.
 
-The grid appears at the end of the post. Clicking a photo opens it at full size. The archive and Sermons lists mark the post with a "照片 Photos" tag.
+The grid appears at the end of the post. Clicking a photo opens it large on the same page, with a "返回 Back" button and previous/next buttons. The archive and Sermons lists mark the post with a "照片 Photos" tag.
 
 ## 快速指南：发布新文章
 

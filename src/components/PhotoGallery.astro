@@ -1,7 +1,13 @@
 ---
-// A grid of photos. Each photo opens at full size when clicked.
+// A grid of photos. Clicking a photo opens it large in a viewer on the same
+// page, with a back button and previous/next links.
+//
+// The viewer needs no JavaScript: each thumbnail links to #photo-<n>, and the
+// CSS `:target` rule shows the matching viewer. Because opening a photo is an
+// ordinary link, the browser's back button (or back gesture on a phone) also
+// closes it.
 import type { ImageMetadata } from 'astro';
-import { Image, getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 
 interface Photo {
   src: ImageMetadata;
@@ -13,20 +19,24 @@ interface Props {
 }
 const { photos } = Astro.props;
 
-const items = await Promise.all(
-  photos.map(async (photo) => ({
-    ...photo,
-    full: await getImage({ src: photo.src, width: Math.min(photo.src.width, 1920) }),
-  })),
-);
+// Links that close the viewer point at the hidden marker just before the grid.
+// A hidden element has no position, so closing doesn't scroll the page.
+const closeId = 'photos';
+const viewerId = (index: number) => `photo-${index + 1}`;
+
+// Sizes for the large photo, never wider than the original.
+const largeWidths = (photo: Photo) => [
+  ...new Set([960, 1600, 1920].map((width) => Math.min(width, photo.src.width))),
+];
 ---
 
+<span id={closeId} hidden></span>
 <ul class="gallery">
   {
-    items.map((photo) => (
+    photos.map((photo, index) => (
       <li>
         <figure>
-          <a href={photo.full.src}>
+          <a href={`#${viewerId(index)}`}>
             <Image
               src={photo.src}
               alt={photo.alt}
@@ -40,3 +50,46 @@ const items = await Promise.all(
     ))
   }
 </ul>
+
+{
+  photos.map((photo, index) => (
+    <div
+      class="lightbox"
+      id={viewerId(index)}
+      role="dialog"
+      aria-label={`照片 Photo ${index + 1} / ${photos.length}`}
+    >
+      <a class="lightbox-backdrop" href={`#${closeId}`} tabindex="-1" aria-hidden="true" />
+      <div class="lightbox-bar">
+        <a class="lightbox-button" href={`#${closeId}`}>
+          ← <span lang="zh-Hans">返回</span>{' '}<span lang="en">Back</span>
+        </a>
+        {photos.length > 1 && (
+          <span class="lightbox-count">
+            {index + 1} / {photos.length}
+          </span>
+        )}
+      </div>
+      <figure class="lightbox-figure">
+        <Image src={photo.src} alt={photo.alt} widths={largeWidths(photo)} sizes="100vw" />
+        {photo.caption && <figcaption>{photo.caption}</figcaption>}
+      </figure>
+      {photos.length > 1 && (
+        <nav class="lightbox-nav" aria-label="照片导航 Photo navigation">
+          {index > 0 ? (
+            <a class="lightbox-button" href={`#${viewerId(index - 1)}`}>
+              ‹ <span lang="zh-Hans">上一张</span>{' '}<span lang="en">Previous</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {index < photos.length - 1 && (
+            <a class="lightbox-button" href={`#${viewerId(index + 1)}`}>
+              <span lang="zh-Hans">下一张</span>{' '}<span lang="en">Next</span> ›
+            </a>
+          )}
+        </nav>
+      )}
+    </div>
+  ))
+}

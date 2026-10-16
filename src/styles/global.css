@@ -794,6 +794,106 @@ mark.todo {
   color: var(--muted);
 }
 
+/* Photo viewer. Hidden until its address (#photo-1, #photo-2, ...) is opened.
+   Same dark colours in both themes, so photos stand out. */
+.lightbox {
+  --accent-2: #86bfc2; /* light focus ring, readable on the dark background */
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  padding: 0.75rem var(--gutter);
+  background: #14110f;
+  color: #f3ece4;
+  overflow-y: auto;
+}
+
+.lightbox:target {
+  display: grid;
+}
+
+/* Stop the page behind the viewer from scrolling. */
+html:has(.lightbox:target) {
+  overflow: hidden;
+}
+
+/* Clicking anywhere outside the photo and buttons closes the viewer. */
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+}
+
+.lightbox-bar,
+.lightbox-nav,
+.lightbox-figure {
+  position: relative;
+}
+
+.lightbox-bar,
+.lightbox-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.lightbox-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0.35rem 1rem;
+  border: 1px solid rgb(255 255 255 / 0.45);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.08);
+  color: #ffffff;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.lightbox-button:hover {
+  background: rgb(255 255 255 / 0.18);
+}
+
+.lightbox-count {
+  color: #d3c8bc;
+  font-size: 0.95rem;
+}
+
+.lightbox-figure {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  place-items: center;
+  min-height: 0;
+  margin: 0;
+  /* Clicks beside the photo fall through to the backdrop. */
+  pointer-events: none;
+}
+
+.lightbox-figure img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: auto;
+}
+
+.lightbox-figure figcaption {
+  margin-top: 0.5rem;
+  color: #e8dfd5;
+  font-size: 0.95rem;
+  text-align: center;
+  pointer-events: auto;
+}
+
 .post-tags {
   display: flex;
   flex-wrap: wrap;
