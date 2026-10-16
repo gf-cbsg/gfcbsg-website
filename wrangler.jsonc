@@ -1,0 +1,19 @@
+// Cloudflare deploy settings. Cloudflare builds the site with `npm run build`
+// and then runs `npx wrangler deploy`, which reads this file.
+//
+// The site is plain static files: Cloudflare serves the built `dist/` folder
+// as-is, including the redirects in `dist/_redirects` (copied from public/).
+// Without this file, Wrangler guesses how to deploy the project, and newer
+// versions try to convert it into a server app, which fails.
+{
+  // Must match the Worker's name in the Cloudflare dashboard.
+  "name": "gfcbsg-website",
+  "compatibility_date": "2026-09-30",
+  "assets": {
+    "directory": "./dist",
+    // Unknown addresses get the site's own 404 page.
+    "not_found_handling": "404-page",
+    // /about is redirected to /about/, matching the site's links.
+    "html_handling": "auto-trailing-slash"
+  }
+}

@@ -1,6 +1,6 @@
 # 大福克斯中文查经班网站 · GFCBSG website
 
-The website of the Grand Forks Chinese Bible Study Group, **www.gfcbsg.com**. It's a small static site built with [Astro](https://astro.build) and hosted on Cloudflare Pages. Every change saved to the `main` branch on GitHub is published automatically within a few minutes.
+The website of the Grand Forks Chinese Bible Study Group, **www.gfcbsg.com**. It's a small static site built with [Astro](https://astro.build) and hosted on Cloudflare. Every change saved to the `main` branch on GitHub is published automatically within a few minutes.
 
 ## What do you want to do?
 
@@ -259,7 +259,7 @@ Then open http://localhost:4321. The page reloads when you save a file. Press `C
 | `npm run dev` | Runs the site locally at http://localhost:4321 and updates it as you edit. |
 | `npm run build` | Builds the production site into `dist/`. Run this before pushing to `main`. |
 | `npm run preview` | Serves the built `dist/` folder locally, to check exactly what will be published. |
-| `npx wrangler pages dev dist` | Serves `dist/` the way Cloudflare does, including the redirects in `public/_redirects` (after `npm run build`). |
+| `npx wrangler dev` | Serves `dist/` the way Cloudflare does, using `wrangler.jsonc`, including the redirects in `public/_redirects` (run `npm run build` first). |
 
 Two things behave differently locally: an address without its final slash (`/about` instead of `/about/`) shows "page not found", and old Google Sites addresses aren't redirected. Both work on Cloudflare.
 
@@ -290,52 +290,43 @@ Ground rules the site was built to: no client-side JavaScript, no web fonts, no 
 
 ## Deploy
 
-Cloudflare Pages builds and publishes the site straight from GitHub:
+The site runs on Cloudflare as a Worker named `gfcbsg-website` that serves the built site as plain files. Cloudflare builds and publishes it straight from GitHub:
 
 - **A commit to `main`** updates the live site within a few minutes.
-- **A commit to any other branch** gets its own preview address ending in `.pages.dev`.
-- **A failed build** leaves the live site on its previous version. The error is in Cloudflare under **Workers & Pages** → the project → **Deployments**.
+- **A failed build** leaves the live site on its previous version. The error is in Cloudflare under **Workers & Pages** → `gfcbsg-website` → **Deployments** → **View build**.
 
-### Connect Cloudflare Pages (one-time setup)
+Each deploy runs two commands: `npm run build`, which builds the site into `dist/`, then `npx wrangler deploy`, which uploads `dist/`. The deploy settings live in [`wrangler.jsonc`](wrangler.jsonc) in this repository. Keep that file: without it, Wrangler (Cloudflare's deploy tool) tries to guess how to deploy and fails. Wrangler's version is pinned in `package.json`, so a new Wrangler release can't change how the site deploys.
 
-Use a Cloudflare account the group controls (for example one registered with `chinese.biblestudy.group@gmail.com`), so access doesn't depend on one volunteer.
+### Connect Cloudflare (one-time setup)
+
+This is already done for the current site. These steps are for setting it up again, for example under a different Cloudflare account. Use an account the group controls (such as one registered with `chinese.biblestudy.group@gmail.com`), so access doesn't depend on one volunteer.
 
 1. Sign in at https://dash.cloudflare.com. The free plan is enough.
-2. Go to **Workers & Pages**, then **Create**, then **Pages**, then **Connect to Git**. Cloudflare renames these menus from time to time; look for the option to import an existing Git repository into Pages.
+2. Go to **Workers & Pages** → **Create** → **Import a repository** (Cloudflare renames these menus from time to time).
 3. Connect GitHub. When GitHub asks, install Cloudflare's app on the `gf-cbsg` organization and give it access to `gfcbsg-website` only.
 4. Choose `gfcbsg-website` and enter these settings:
 
    | Setting | Value |
    |---|---|
+   | Project name | `gfcbsg-website` (must match `name` in `wrangler.jsonc`) |
    | Production branch | `main` |
-   | Framework preset | Astro |
    | Build command | `npm run build` |
-   | Build output directory | `dist` |
+   | Deploy command | `npx wrangler deploy` |
    | Root directory | leave empty |
    | Environment variables | none needed; the Node version comes from `.nvmrc` |
 
-5. Click **Save and Deploy**. When the first build finishes, the site is live at `https://<project-name>.pages.dev`. Check it before moving the domain.
+5. Click **Deploy**. When the first deploy finishes, the site is live at the `.workers.dev` address Cloudflare shows. Check it before connecting the domain.
 
-### Move www.gfcbsg.com from Google Sites
+### The www.gfcbsg.com domain
 
-This points the address www.gfcbsg.com at the new site instead of the old Google Site. Nothing in this repository does it automatically: whoever controls the domain makes the change. Pick a quiet time and follow the steps in order.
+**Done in October 2026.** The domain's DNS is hosted by Cloudflare, `www.gfcbsg.com` is attached to the `gfcbsg-website` Worker, and `gfcbsg.com` redirects to `https://www.gfcbsg.com/`. The old Google Site is unpublished, and the domain is verified in [Google Search Console](https://search.google.com/search-console) with the sitemap submitted.
 
-**Before you start**
+If the domain ever needs attaching again (for example after recreating the Worker):
 
-- The new site works at its `.pages.dev` address, and you've checked the remaining yellow "TODO: confirm" markers (`MIGRATION_TODO.md`): either resolved, or fine to launch with.
-- Find out where the domain's settings (DNS) are managed. Look up `gfcbsg.com` at https://lookup.icann.org: "Registrar" is the company the domain is registered with, and "Name servers" shows who hosts its DNS. Domains bought through Google Domains were moved to Squarespace Domains in 2023. Sign in to that account.
-
-**Steps**
-
-1. **In Cloudflare:** open the Pages project, then **Custom domains**, then **Set up a custom domain**, and enter `www.gfcbsg.com`. Cloudflare shows the DNS record it needs: a `CNAME` record named `www` pointing to `<project-name>.pages.dev`.
-2. **At the DNS host:** find the existing `www` record. For Google Sites it's a `CNAME` pointing to `ghs.googlehosted.com`. Change its target to `<project-name>.pages.dev` and save. If the domain's DNS is already hosted by Cloudflare, Cloudflare can add the record for you in step 1.
-3. **Wait.** DNS changes usually take a few minutes, and occasionally up to 48 hours. Cloudflare sets up HTTPS automatically. The custom domain shows as "Active" when it's done.
-4. **The bare domain** (`gfcbsg.com`, without `www`): make sure it still forwards to `https://www.gfcbsg.com`. Most registrars call this "domain forwarding", and Google Sites setups normally used it already. If the DNS is hosted by Cloudflare, add `gfcbsg.com` as a second custom domain instead.
-5. **Test:** open https://www.gfcbsg.com and check it's the new site. Then try two old addresses, https://www.gfcbsg.com/home/page-1 and https://www.gfcbsg.com/history. Each should land on the matching new page.
-6. **In Google Sites** (signed in as the site's owner): go to **Settings**, then **Custom domains**, and remove `www.gfcbsg.com`. Then unpublish the old site at `sites.google.com/view/gfcbsg` so search engines don't show two copies. Unpublishing keeps the old site in Google Drive.
-7. **Optional:** in [Google Search Console](https://search.google.com/search-console), add `www.gfcbsg.com` and submit `https://www.gfcbsg.com/sitemap-index.xml`.
-
-**To undo:** change the `www` record back to `ghs.googlehosted.com` and add the custom domain again in Google Sites.
+1. In Cloudflare, open **Workers & Pages** → `gfcbsg-website` → **Settings** → **Domains & Routes** → **Add** → **Custom domain**.
+2. Enter `www` as the subdomain, so it reads `www.gfcbsg.com`. Don't attach the bare `gfcbsg.com`: its records run the redirect to `www`.
+3. If Cloudflare says `www.gfcbsg.com` already has DNS records, delete the old `www` record under your domain → **DNS** → **Records**, then try again. Leave records named `gfcbsg.com` or `@`, and all TXT and MX records, alone.
+4. Wait a few minutes, then open https://www.gfcbsg.com and an old address such as https://www.gfcbsg.com/history, which should redirect to `/about/`.
 
 ## Background documents
 
