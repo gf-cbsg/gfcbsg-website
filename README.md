@@ -8,6 +8,7 @@ The website of the Grand Forks Chinese Bible Study Group, **www.gfcbsg.com**. It
 |---|---|
 | Add a news post or event | [Add a post](#add-a-post) |
 | Add a photo to a post | [Add a photo to a post](#add-a-photo-to-a-post) |
+| Add a YouTube video or a grid of photos | [Add a video](#add-a-video) · [Add several photos as a grid](#add-several-photos-as-a-grid) |
 | 用中文看发文步骤 | [快速指南：发布新文章](#快速指南发布新文章) |
 | Change the meeting time or place | [Update the meeting details](#update-the-meeting-details) |
 | Fix a yellow "TODO: confirm" marker | [`MIGRATION_TODO.md`](MIGRATION_TODO.md) |
@@ -65,6 +66,8 @@ The lines between the two `---` lines are the post's settings. Keep both `---` l
 | `lang` | `zh-Hans` for Simplified Chinese, `zh-Hant` for Traditional Chinese, `en` for English |
 | `description` (optional) | One sentence that search engines and link previews show |
 | `sermon` (optional) | Write `sermon: true` for a sermon or talk. The post then also appears on the Sermons page. |
+| `videos` (optional) | YouTube links to show as players at the top of the post. See [Add a video](#add-a-video). |
+| `photos` (optional) | Photos to show as a grid at the end of the post. See [Add several photos as a grid](#add-several-photos-as-a-grid). |
 
 **Formatting the text** (this is called Markdown):
 
@@ -95,6 +98,62 @@ The lines between the two `---` lines are the post's settings. Keep both `---` l
 
 Upload the photo **before** saving the post that uses it. If the post comes first, the site won't update until the photo is there.
 
+### Add a video
+
+To show a YouTube video as a player at the top of a post, add a `videos` setting between the `---` lines, with the link copied from YouTube:
+
+```markdown
+---
+title: 2026 年圣诞节聚会
+date: 2026-12-20
+lang: zh-Hans
+videos:
+  - https://www.youtube.com/watch?v=VIDEO_ID
+---
+
+正文写在这里。
+```
+
+- Copy the link from the browser's address bar or YouTube's **Share** button. `youtube.com/watch?v=…`, `youtu.be/…`, Shorts and live links all work, and a start time (`&t=90`) is kept.
+- For more than one video, add one line per video. Each line starts with **two spaces, a hyphen and a space** (`  - `).
+- To show a title under a player, write that video as two lines instead:
+
+  ```markdown
+  videos:
+    - url: https://youtu.be/VIDEO_ID
+      title: 圣诞信息 · Christmas message
+  ```
+
+- A Google Drive video link (shared as "Anyone with the link") also works. Any other link is shown as a plain "Watch the video" link.
+- The archive and Sermons lists mark the post with a "视频 Video" tag.
+
+The player uses YouTube's privacy-enhanced mode, so no YouTube cookies are set until someone presses play.
+
+### Add several photos as a grid
+
+For more than one or two photos, a grid looks tidier than photos placed one under another in the text.
+
+1. Upload the photos to https://github.com/gf-cbsg/gfcbsg-website/tree/main/src/assets/posts, as in [Add a photo to a post](#add-a-photo-to-a-post).
+2. Add a `photos` setting between the `---` lines. Each photo needs its file (`src`) and a short description (`alt`); a caption is optional:
+
+   ```markdown
+   ---
+   title: 2026 年圣诞节聚会
+   date: 2026-12-20
+   lang: zh-Hans
+   photos:
+     - src: ../../assets/posts/2026-12-christmas-dumplings.jpg
+       alt: 大家一起包饺子
+       caption: 包饺子
+     - src: ../../assets/posts/2026-12-christmas-children.jpg
+       alt: 孩子们表演节目
+   ---
+   ```
+
+   Keep the indentation exactly as shown: two spaces before each `-`, and four spaces before `alt` and `caption`.
+
+The grid appears at the end of the post. Clicking a photo opens it at full size. The archive and Sermons lists mark the post with a "照片 Photos" tag.
+
 ## 快速指南：发布新文章
 
 全部操作都可以在浏览器里完成。
@@ -113,6 +172,24 @@ Upload the photo **before** saving the post that uses it. If the post comes firs
 ```
 
 请先上传照片，再保存文章。
+
+**添加 YouTube 视频：** 在两行 `---` 之间加上 `videos`，下面每行写一个视频链接（行首是两个空格、一个连字符和一个空格）。视频会以播放器的形式显示在文章最上面：
+
+```markdown
+videos:
+  - https://www.youtube.com/watch?v=VIDEO_ID
+```
+
+**多张照片排成照片墙：** 先上传照片，然后在两行 `---` 之间加上 `photos`。每张照片写文件路径（`src`）和简短说明（`alt`），`caption`（图片说明文字）可写可不写。注意缩进要和例子完全一样：
+
+```markdown
+photos:
+  - src: ../../assets/posts/2026-12-christmas-dumplings.jpg
+    alt: 大家一起包饺子
+    caption: 包饺子
+  - src: ../../assets/posts/2026-12-christmas-children.jpg
+    alt: 孩子们表演节目
+```
 
 **注意隐私：** 未经本人同意，不要在文章中公开他人的电话号码或电子邮件；发布有人物（特别是儿童）的照片前请先征得同意。
 

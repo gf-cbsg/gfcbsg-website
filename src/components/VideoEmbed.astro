@@ -1,0 +1,45 @@
+---
+// An embedded YouTube or Google Drive player. Links the site can't embed
+// are shown as a plain "watch" link instead, so nothing breaks.
+import { parseVideoUrl } from '../lib/video';
+
+interface Props {
+  url: string;
+  /** Read out by screen readers; also shown under the player when given. */
+  title: string;
+  /** Show the title under the player (only when the post gave one). */
+  showTitle?: boolean;
+}
+const { url, title, showTitle = false } = Astro.props;
+const video = parseVideoUrl(url);
+const where = video?.kind === 'drive' ? 'Google Drive' : 'YouTube';
+---
+
+{
+  video ? (
+    <figure class="video">
+      <div class="video-frame">
+        <iframe
+          src={video.embedUrl}
+          title={title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        />
+      </div>
+      <figcaption>
+        {showTitle && <span class="video-title">{title}</span>}
+        <a href={video.watchUrl}>
+          <span lang="zh-Hans">在 {where} 观看</span> <span lang="en">Watch on {where}</span> ↗
+        </a>
+      </figcaption>
+    </figure>
+  ) : (
+    <p class="video-link">
+      <a href={url}>
+        <span lang="zh-Hans">观看视频</span> <span lang="en">Watch the video</span> ↗
+      </a>
+    </p>
+  )
+}

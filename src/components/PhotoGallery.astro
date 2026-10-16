@@ -1,0 +1,42 @@
+---
+// A grid of photos. Each photo opens at full size when clicked.
+import type { ImageMetadata } from 'astro';
+import { Image, getImage } from 'astro:assets';
+
+interface Photo {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+interface Props {
+  photos: Photo[];
+}
+const { photos } = Astro.props;
+
+const items = await Promise.all(
+  photos.map(async (photo) => ({
+    ...photo,
+    full: await getImage({ src: photo.src, width: Math.min(photo.src.width, 1920) }),
+  })),
+);
+---
+
+<ul class="gallery">
+  {
+    items.map((photo) => (
+      <li>
+        <figure>
+          <a href={photo.full.src}>
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              widths={[480, 800]}
+              sizes="(min-width: 48rem) 16rem, 50vw"
+            />
+          </a>
+          {photo.caption && <figcaption>{photo.caption}</figcaption>}
+        </figure>
+      </li>
+    ))
+  }
+</ul>

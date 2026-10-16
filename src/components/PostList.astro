@@ -7,6 +7,11 @@ interface Props {
   layout?: 'list' | 'grid';
 }
 const { posts, layout = 'list' } = Astro.props;
+
+// Small labels so visitors can spot posts with videos or photos.
+const hasVideo = (post: Post) => post.data.videos.length > 0;
+const hasPhotos = (post: Post) =>
+  post.data.photos.length > 0 || /!\[[^\]]*\]\(/.test(post.body ?? '');
 ---
 
 <ul class:list={['post-list', { 'post-grid': layout === 'grid' }]}>
@@ -18,6 +23,20 @@ const { posts, layout = 'list' } = Astro.props;
             {post.data.title}
           </span>
           <time datetime={isoDate(post.data.date)}>{isoDate(post.data.date)}</time>
+          {(hasVideo(post) || hasPhotos(post)) && (
+            <span class="post-tags">
+              {hasVideo(post) && (
+                <span class="tag">
+                  <span lang="zh-Hans">视频</span> <span lang="en">Video</span>
+                </span>
+              )}
+              {hasPhotos(post) && (
+                <span class="tag">
+                  <span lang="zh-Hans">照片</span> <span lang="en">Photos</span>
+                </span>
+              )}
+            </span>
+          )}
         </a>
       </li>
     ))

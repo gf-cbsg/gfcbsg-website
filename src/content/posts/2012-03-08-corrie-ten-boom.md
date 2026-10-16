@@ -3,11 +3,11 @@ title: Corrie Ten Boom
 date: 2012-03-08
 lang: en
 legacy_url: /home/corrietenboom
+videos:
+  - https://www.youtube.com/watch?v=038cuYe3Nis
 ---
 
 This Friday we will have a prayer meeting at Wittenberg Chapel. Marvin will be sharing information about Corrie Ten Boom. We will watch a video of Pat Robertson interviewing her in 1974.
-
-<https://www.youtube.com/watch?v=038cuYe3Nis>
 
 A transcript of the interview is available here:
 
