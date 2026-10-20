@@ -368,7 +368,9 @@ docs/                   content inventory and QA report from the rebuild
 MIGRATION_TODO.md       everything still to confirm or supply
 ```
 
-Ground rules the site was built to: no client-side JavaScript, no web fonts, no analytics or trackers, text contrast at WCAG AA in light and dark mode, and a `lang` attribute on every piece of Chinese or English text.
+Ground rules the site was built to: no client-side JavaScript in the site's own code, no web fonts, no trackers, text contrast at WCAG AA in light and dark mode, and a `lang` attribute on every piece of Chinese or English text.
+
+**Visitor statistics:** Cloudflare Web Analytics is switched on, by the group's choice (October 2026). It isn't in this repository: Cloudflare adds its small script to each page as it serves it. It sets no cookies and counts page views and visitors, shown in the Cloudflare dashboard under **Analytics & Logs** → **Web Analytics**. To turn it off, disable the `gfcbsg.com` site there.
 
 ## Deploy
 
